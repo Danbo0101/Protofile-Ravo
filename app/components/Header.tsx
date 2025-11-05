@@ -10,13 +10,13 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import CallIcon from "@mui/icons-material/Call";
 
-type MenuKey = "Home" | "Products" | "Pricing" | "Website Design" | "Policies";
+type MenuKey = "Home" | "Products" | "Pricing" | "Other" | "Policies";
 
 const NAV: { key: MenuKey; label: string }[] = [
     { key: "Home", label: "Home" },
     { key: "Products", label: "Products" },
     { key: "Pricing", label: "Pricing" },
-    { key: "Website Design", label: "Website Design" },
+    { key: "Other", label: "Other" },
     { key: "Policies", label: "Policies" },
 ];
 
@@ -24,14 +24,9 @@ const LEFT_LIST: Record<MenuKey, string[]> = {
     Home: [],
     Products: ["POS System", "RAVO Marketing", "RAVO Design Service", "Credit Card Processing", "Payroll"],
     Pricing: [],
-    "Website Design": [],
+    Other: ["Website Design"],
     Policies: ["Privacy Policy", "Terms & Conditions", "SMS Terms & Conditions"],
 };
-
-/** ========= Cột phải cho từng mục bên trái =========
- *  img là tùy chọn. Nếu thiếu img, UI vẫn hiển thị label bình thường.
- *  Đặt file ảnh demo vào public/.. theo đường dẫn dưới, hoặc sửa path tùy bạn.
- */
 const RIGHT_CONTENT: Record<string, { label: string; sub?: string; img?: string }[]> = {
     "POS System": [
         { label: "Handheld", sub: "All-in-one", img: "/hw/handheld.png" },
@@ -43,16 +38,16 @@ const RIGHT_CONTENT: Record<string, { label: string; sub?: string; img?: string 
         { label: "Reader (magstripe)", sub: "Swipe", img: "/hw/reader-mag.png" },
         { label: "Accessories", sub: "Printers, drawers", img: "/hw/accessories.png" },
         { label: "Kits", sub: "Bundles", img: "/hw/kits.png" },
-        { label: "All hardware" }, // không ảnh -> vẫn hiện label
+        { label: "All hardware" },
     ],
     "RAVO Marketing": [
         { label: "SMS Campaigns", img: "/mk/sms.png" },
         { label: "Email Automation", img: "/mk/email.png" },
-        { label: "Promotions" }, // không ảnh
+        { label: "Promotions" },
     ],
     "RAVO Design Service": [
         { label: "Website Design", img: "/design/web.png" },
-        { label: "Logo & Brand" }, // không ảnh
+        { label: "Logo & Brand" },
     ],
     "Credit Card Processing": [
         { label: "In-person Payments", img: "/pay/inperson.png" },
@@ -80,7 +75,7 @@ const Header = () => {
     const open = (k: MenuKey) => {
         if (closeTimer.current) clearTimeout(closeTimer.current);
         if (LEFT_LIST[k].length === 0) {
-            setOpenKey(null); // Home/Pricing/Website Design: không mở panel
+            setOpenKey(null);
             return;
         }
         setOpenKey(k);
@@ -97,7 +92,6 @@ const Header = () => {
         exit: { y: -20, opacity: 0, transition: { duration: 0.2, ease: "easeIn" } },
     };
 
-    // Header chỉ trắng khi scroll hoặc đang mở một panel có item
     const isWhiteHeader = scrolled || (openKey && LEFT_LIST[openKey].length > 0);
 
     return (
@@ -123,7 +117,7 @@ const Header = () => {
                                     }}
                                     onMouseLeave={() => setHoverKey(null)}
                                     className={`text-[18px] transition-colors cursor-pointer ${hoverKey === key ? "font-bold" : "font-bold"
-                                        } ${isWhiteHeader ? "text-neutral-500 hover:text-black" : "text-neutral-500 hover:text-white"
+                                        } ${isWhiteHeader ? "text-neutral-400 hover:text-black" : "text-neutral-400 hover:text-white"
                                         }`}
                                 >
                                     {label}
@@ -136,22 +130,20 @@ const Header = () => {
                         <IconButton onClick={() => window.open("https://www.facebook.com/thonguyenzota", "_blank")}>
                             <FacebookOutlinedIcon className="text-blue-700/80" sx={{ fontSize: 30 }} />
                         </IconButton>
-                        <IconButton onClick={() => window.open("https://www.instagram.com/zota_tho_nguyen", "_blank")}>
+                        <IconButton onClick={() => window.open("https://www.instagram.com/ravopos_tho_nguyen", "_blank")}>
                             <InstagramIcon className="text-pink-500/80" sx={{ fontSize: 30 }} />
                         </IconButton>
-                        <IconButton onClick={() => window.open("https://www.facebook.com/ZotaByThoNguyenDPS/", "_blank")}>
+                        <IconButton onClick={() => window.open("https://www.facebook.com/RavoPosByThoNguyen", "_blank")}>
                             <FacebookIcon className="text-blue-600/80" sx={{ fontSize: 30 }} />
                         </IconButton>
                         <a
                             href="tel:+14048064448"
-                            className="ml-4 text-white font-bold text-[15px] bg-gradient-to-r from-[#0C807E] to-[#86E3A8] px-6 py-3 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl"
+                            className="ml-4 text-white font-bold text-[15px] bg-linear-to-r from-[#0C807E] to-[#86E3A8] px-6 py-3 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl"
                         >
                             <CallIcon sx={{ fontSize: 17 }} /> (404) 806-4448
                         </a>
                     </div>
                 </div>
-
-                {/* PANEL */}
                 <AnimatePresence mode="wait">
                     {openKey && LEFT_LIST[openKey].length > 0 && (
                         <PanelTwoCols
@@ -166,13 +158,9 @@ const Header = () => {
                 </AnimatePresence>
             </header>
 
-            {/* đệm nội dung để không bị header che */}
-            <div className="h-16" />
         </>
     );
 };
-
-/** ========= Panel 2 cột: trái (danh sách), phải (grid theo mục đang hover ở trái) ========= */
 const PanelTwoCols = ({
     openKey,
     items,
@@ -186,7 +174,6 @@ const PanelTwoCols = ({
     onClose: () => void;
     variants: Variants;
 }) => {
-    // Chưa chọn gì ở cột trái -> chỉ hiện cột trái, phải ẩn
     const [activeLeft, setActiveLeft] = useState<string | null>(null);
 
     return (
@@ -199,9 +186,8 @@ const PanelTwoCols = ({
             onMouseLeave={onClose}
             className="absolute left-0 right-0 top-full bg-white text-black shadow-[0_24px_60px_-24px_rgba(0,0,0,0.25)]"
         >
-            <div className="mx-auto max-w-7xl px-6 py-10 border-t border-neutral-200">
+            <div className="mx-auto max-w-7xl px-6 py-10 ">
                 <div className="grid grid-cols-12 gap-10">
-                    {/* LEFT column */}
                     <div className="col-span-12 md:col-span-3">
                         <ul className="space-y-5">
                             {items.map((t) => {
@@ -220,8 +206,6 @@ const PanelTwoCols = ({
                             })}
                         </ul>
                     </div>
-
-                    {/* RIGHT column (chỉ hiện khi đã chọn một mục ở trái) */}
                     <div className="col-span-12 md:col-span-9">
                         <AnimatePresence mode="wait">
                             {activeLeft && (
@@ -235,7 +219,7 @@ const PanelTwoCols = ({
                                     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-10">
                                         {(RIGHT_CONTENT[activeLeft] ?? []).map((it, idx) => (
                                             <a key={`${it.label}-${idx}`} href="#" className="group flex flex-col items-center text-center">
-                                                {/* Hình nếu có; không có thì chỉ hiện label */}
+
                                                 {it.img ? (
                                                     <div className="h-16 w-16 mb-2 relative">
                                                         <Image
@@ -246,7 +230,7 @@ const PanelTwoCols = ({
                                                         />
                                                     </div>
                                                 ) : (
-                                                    <div className="mb-2 h-8" /> // chừa chút khoảng để các ô đều nhau
+                                                    <div className="mb-2 h-8" />
                                                 )}
                                                 <div className="text-sm font-semibold text-neutral-900">{it.label}</div>
                                                 {it.sub && (
@@ -257,7 +241,7 @@ const PanelTwoCols = ({
                                             </a>
                                         ))}
 
-                                        {/* Nếu không có dữ liệu cho activeLeft → vẫn hiển thị tên mục đã chọn */}
+
                                         {((RIGHT_CONTENT[activeLeft] ?? []).length === 0) && (
                                             <div className="col-span-full text-neutral-600 text-sm">
                                                 {activeLeft}

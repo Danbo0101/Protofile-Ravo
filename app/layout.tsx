@@ -1,5 +1,6 @@
 // app/layout.tsx
 import type { ReactNode } from "react";
+import { Toaster } from "sonner";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import "./globals.css";
@@ -14,6 +15,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className="min-h-screen flex flex-col ">
         <Header />
         <main className="flex-1">{children}</main>
+        <Toaster position="top-right" richColors closeButton />
         <Footer />
       </body>
     </html>

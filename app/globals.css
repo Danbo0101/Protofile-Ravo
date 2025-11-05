@@ -28,3 +28,7 @@ body {
 .header-blur {
   backdrop-filter: saturate(140%) blur(10px);
 }
+
+.faq-body {
+  font-weight: 100;
+}
