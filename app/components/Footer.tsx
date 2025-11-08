@@ -42,7 +42,7 @@ const COLUMNS: Column[] = [
     {
         title: "Contact",
         links: [
-            { label: "Contact: (404) 806-4448", href: "tel:+14048064448" },
+            { label: "Contact: (346) 326-7765", href: "tel:+13463267765" },
             { label: "Direct: ", href: "#" },
         ],
     },

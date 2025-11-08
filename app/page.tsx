@@ -1,7 +1,8 @@
 "use client";
 import type { ReactNode } from "react";
 import { useState, useEffect, useRef } from "react";
-import { motion, type Variants, useAnimation, useInView, AnimatePresence } from "framer-motion";
+import { motion, type Variants, useAnimation, useInView } from "framer-motion";
+import { stagger, fadeUp } from "@/app/components/variants";
 import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 
@@ -34,6 +35,8 @@ import {
 } from "@mui/icons-material";
 
 import HardwareCardsInteractive from "@/app/components/HardwareCardsInteractive";
+import AccordionItem from "@/app/components/AccordionItem";
+import StickyScrollySteps, { type Step } from "@/app/components/StickyScrollySteps";
 
 import imgNail1 from "@/app/assets/nail1.png";
 import imgNail2 from "@/app/assets/nail2.png";
@@ -89,28 +92,6 @@ type CardItem = {
   bg: string;
 };
 
-type Bullet = {
-  icon: ReactNode;
-  text: string;
-};
-
-type Step = {
-  title: string;
-  img: string;
-  bullets: Bullet[];
-};
-
-type QA = { q: string; a: string };
-
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 36 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
-};
-
-const stagger: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.12 } },
-};
 
 export default function HomePage() {
   const videoSrc = "/videoBg.mp4";
@@ -387,7 +368,7 @@ export default function HomePage() {
             className="mt-8 flex flex-wrap items-center justify-center gap-4"
           >
             <a
-              href="tel:+14048064448"
+              href="tel:+13463267765"
               className="rounded-full border border-white px-10 py-3 font-medium text-white shadow-lg transition hover:scale-[1.1] hover:bg-white hover:text-black active:scale-[0.98]"
             >
               Get Started
@@ -897,200 +878,9 @@ function LogoMarquee({
   );
 }
 
-function StickyScrollySteps({ steps }: { steps: Step[] }) {
-  const [active, setActive] = useState(0);
-  const [prevActive, setPrevActive] = useState(0);
-  const stepsRef = useRef<HTMLDivElement[]>([]);
-  const setStepRef = (el: HTMLDivElement | null, i: number) => {
-    if (el) stepsRef.current[i] = el;
-  };
 
-  useEffect(() => {
-    if (!stepsRef.current.length) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        let next = active;
-        let best = 0;
-        for (const e of entries) {
-          if (e.isIntersecting && e.intersectionRatio > best) {
-            best = e.intersectionRatio;
-            next = Number((e.target as HTMLElement).dataset.index);
-          }
-        }
-        if (next !== active) setActive(next);
-      },
-      { root: null, rootMargin: "-45% 0px -45% 0px", threshold: buildThresholdList(30) }
-    );
 
-    stepsRef.current.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, [active]);
-
-  useEffect(() => {
-    if (active !== prevActive) setPrevActive(active);
-  }, [active, prevActive]);
-
-  const totalH = `${steps.length * 100}vh`;
-
-  return (
-    <section className="relative w-full" style={{ height: totalH }}>
-      <div className="mx-auto grid h-1/2 grid-cols-1 gap-6 px-4 md:grid-cols-2 md:px-6">
-        <div className="relative hidden md:block">
-          <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden rounded-3xl ">
-            <AnimatePresence initial={false} mode="sync">
-              <motion.img
-                key={`prev-${prevActive}-${steps[prevActive].img}`}
-                src={steps[prevActive].img}
-                alt={steps[prevActive].title}
-                className="h-8/15 w-full object-cover rounded-3xl will-change-transform will-change-opacity"
-                initial={{ opacity: 1, scale: 1 }}
-                animate={{ opacity: active === prevActive ? 1 : 0, scale: 1.005 }}
-                exit={{ opacity: 0, scale: 1.005 }}
-                transition={{ duration: 0.45, ease: 'easeOut' }}
-              />
-              <motion.img
-                key={`curr-${active}-${steps[active].img}`}
-                src={steps[active].img}
-                alt={steps[active].title}
-                className="absolute h-8/15 w-full object-cover rounded-3xl will-change-transform will-change-opacity"
-                initial={{ opacity: 0, scale: 1.02 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0.98 }}
-                transition={{ duration: 0.55, ease: 'easeOut' }}
-              />
-            </AnimatePresence>
-          </div>
-        </div>
-        <div className="relative">
-          {steps.map((s, i) => (
-            <div
-              key={i}
-              data-index={i}
-              ref={(el) => setStepRef(el, i)}
-              className="flex min-h-screen items-center"
-            >
-              <article
-                className={`mx-auto w-full   p-6  md:p-8 ${i === active ? " bg-white" : " bg-white/70"
-                  }`}
-              >
-                <motion.h3
-                  className="text-2xl font-extrabold text-gray-900 md:text-3xl"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: i === active ? 1 : 0.7, y: i === active ? 0 : 6 }}
-                  transition={{ duration: 0.55, ease: "easeOut" }}
-                >
-                  {s.title}
-                </motion.h3>
-
-                <div className="my-4 h-px w-full bg-gray-200" />
-
-                <ul className="space-y-5">
-                  {s.bullets.map((b, j) => (
-                    <li key={j} className="flex items-start gap-3">
-                      <div className="mt-0.5 shrink-0">{b.icon}</div>
-                      <p className="leading-relaxed  text-gray-600">{b.text}</p>
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-24 bg-linear-to-b from-transparent to-white" />
-    </section>
-  );
-}
-
-function buildThresholdList(steps = 20) {
-  return Array.from({ length: steps }, (_, i) => i / (steps - 1));
-}
-
-function AccordionItem({
-  idx, q, a, isOpen, onToggle,
-}: {
-  idx: number; q: string; a: string; isOpen: boolean; onToggle: () => void;
-}) {
-  return (
-    <motion.div
-      variants={fadeUp}
-      className="py-10 text-black border-b border-neutral-200 last:border-b"
-    >
-      <button
-        onClick={onToggle}
-        aria-expanded={isOpen}
-        aria-controls={`faq-panel-${idx}`}
-        className="group flex w-full items-start justify-between gap-6 text-left"
-      >
-        <span className="text-2xl font-mono font-semibold leading-snug sm:text-[28px] text-black">
-          {q}
-        </span>
-        <motion.span
-          className="mt-1 inline-flex h-6 w-6 shrink-0 items-center justify-center text-black"
-          whileTap={{ scale: 0.9 }}
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ type: "spring", stiffness: 380, damping: 26 }}
-          aria-hidden
-        >
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.span
-              key={isOpen ? "minus" : "plus"}
-              initial={{ opacity: 0, scale: 0.7, rotate: -90 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              exit={{ opacity: 0, scale: 0.7, rotate: 90 }}
-              transition={{ duration: 0.18, ease: "easeOut" }}
-              className="text-black"
-            >
-              {isOpen ? <Remove fontSize="large" /> : <Add fontSize="large" />}
-            </motion.span>
-          </AnimatePresence>
-        </motion.span>
-      </button>
-
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            id={`faq-panel-${idx}`}
-            key="content"
-            initial="collapsed"
-            animate="open"
-            exit="collapsed"
-            variants={{
-              open: {
-                height: "auto",
-                opacity: 1,
-                marginTop: 16,
-                clipPath: "inset(0% 0 0% 0 round 0px)",
-                transition: {
-                  height: { type: "spring", stiffness: 280, damping: 30 },
-                  opacity: { duration: 0.2 },
-                  clipPath: { duration: 0.28, ease: "easeOut" },
-                },
-              },
-              collapsed: {
-                height: 0,
-                opacity: 0,
-                marginTop: 0,
-                clipPath: "inset(0% 0 100% 0 round 0px)",
-                transition: {
-                  height: { duration: 0.24, ease: "easeInOut" },
-                  opacity: { duration: 0.18 },
-                  clipPath: { duration: 0.22, ease: "easeIn" },
-                },
-              },
-            }}
-            style={{ overflow: "hidden", willChange: "height, opacity, clip-path" }}
-          >
-            <p className="max-w-3xl mt-4 text-base leading-relaxed text-black/80">
-              {a}
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  );
-}
 
 
 
