@@ -347,7 +347,7 @@ const MainScreenPage = () => {
                             variants={fadeUp}
                             className="relative w-full overflow-hidden"
                         >
-                            <div className="relative aspect-video">
+                            <div className="relative aspect-square">
                                 <Image
                                     src={imgMainScreen1}
                                     alt="RAVO POS System"

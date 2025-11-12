@@ -90,48 +90,29 @@ const TerminalPage = () => {
         const video = videoRef.current;
         if (!section || !video) return;
 
-        // Bảo đảm autoplay trên mobile/Safari
         video.muted = true;
         (video as any).playsInline = true;
 
-        // Khi tab ẩn → pause, quay lại → nếu còn trong viewport thì phát lại từ đầu
-        const onVisChange = () => {
-            if (document.hidden) {
-                video.pause();
-            } else if (isIntersectingNow) {
-                replayOnce();
-            }
-        };
-        document.addEventListener("visibilitychange", onVisChange);
-
         let isIntersectingNow = false;
 
-        const replayOnce = () => {
-            try {
-                video.currentTime = 0;
-                // Không loop — chỉ phát một lần mỗi lần vào section
-                video.play().catch(() => { });
-            } catch { }
+        const tryPlay = () => video.play().catch(() => { });
+        const tryPause = () => video.pause();
+
+        const onVisibility = () => {
+            if (document.hidden) tryPause();
+            else if (isIntersectingNow) tryPlay();
         };
+        document.addEventListener("visibilitychange", onVisibility);
 
         const observer = new IntersectionObserver(
-            (entries) => {
-                const entry = entries[0];
+            ([entry]) => {
                 isIntersectingNow = entry.isIntersecting;
-
-                if (entry.isIntersecting) {
-                    // Vào vùng nhìn thấy (đúng section) → phát lại từ đầu 1 lần
-                    replayOnce();
-                } else {
-                    // Ra khỏi vùng → pause
-                    video.pause();
-                }
+                if (entry.isIntersecting) tryPlay();
+                else tryPause();
             },
             {
-                // amount ~0.35–0.4 như whileInView của bạn
-                threshold: 0.4,
-                // Đẩy ngưỡng một chút để cảm giác tự nhiên hơn
-                rootMargin: "0px 0px -10% 0px",
+                threshold: 0.25,
+                rootMargin: "0px 0px -15% 0px",
             }
         );
 
@@ -139,9 +120,10 @@ const TerminalPage = () => {
 
         return () => {
             observer.disconnect();
-            document.removeEventListener("visibilitychange", onVisChange);
+            document.removeEventListener("visibilitychange", onVisibility);
         };
     }, []);
+
 
     return (
         <main className="min-h-screen bg-white text-black">
@@ -233,28 +215,22 @@ const TerminalPage = () => {
                     </motion.h2>
 
                     <motion.div
-                        variants={fadeUp}
+                        className="mt-10 md:mt-20"
                         initial="hidden"
                         whileInView="show"
                         viewport={{ once: false, amount: 0.35 }}
-                        className="mt-10 md:mt-20"
                     >
                         <div className="relative mx-auto max-w-4xl overflow-hidden rounded-xl">
                             <video
                                 ref={videoRef}
-                                className="h-auto w-full"
-
-                                playsInline
+                                className="h-auto w-full object-cover"
+                                autoPlay
+                                loop
                                 muted
-                                preload="metadata"
+                                playsInline
+                                preload="auto"
                             >
-                                <source
-                                    src="https://videos.ctfassets.net/2d5q1td6cyxq/26WTg7V8idSZByFPmCFTVt/de60688eef5819fd7ca9f34dc13258e0/terminal_usen_edit.webm"
-                                    type="video/webm"
-                                />
                                 <source src="/videoTerminal.mp4" type="video/mp4" />
-                                <source src="/videoTerminal.mov" type="video/quicktime" />
-                                Trình duyệt của bạn không hỗ trợ video.
                             </video>
                         </div>
                     </motion.div>

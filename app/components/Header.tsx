@@ -16,6 +16,7 @@ import imgScreen from "@/app/assets/imgScreen.png";
 import imgCheck from "@/app/assets/imgCheck.png";
 import imgDigital from "@/app/assets/imgDigital.png";
 import imgTerminal from "@/app/assets/imgTerminal.png";
+import { usePathname, useSearchParams } from "next/navigation"; // 👈 thêm
 
 type MenuKey = "Home" | "Products" | "Pricing" | "Other" | "Policies";
 type LeftItem = { label: string; href: string };
@@ -67,9 +68,7 @@ const useMotionPrefs = () => {
         ? { duration: 0 }
         : { type: "spring", stiffness: 420, damping: 38, mass: 0.9 };
 
-    const sheetOut: Transition = prefersReduced
-        ? { duration: 0 }
-        : { type: "tween", duration: 0.22 };
+    const sheetOut: Transition = prefersReduced ? { duration: 0 } : { type: "tween", duration: 0.22 };
 
     const listIn: Transition = prefersReduced ? { duration: 0 } : { delayChildren: 0.04, staggerChildren: 0.045 };
     const itemIn: Transition = prefersReduced ? { duration: 0 } : { duration: 0.22, ease: "easeOut" };
@@ -111,10 +110,8 @@ const useMotionPrefs = () => {
     return { overlay, sheet, list, item, acc };
 };
 
-
 const Header = () => {
     const [scrolled, setScrolled] = useState(false);
-
     const mv = useMotionPrefs();
 
     const [openKey, setOpenKey] = useState<MenuKey | null>(null);
@@ -123,8 +120,22 @@ const Header = () => {
 
     const [mobileOpen, setMobileOpen] = useState(false);
     const [mobileExpanded, setMobileExpanded] = useState<Record<MenuKey, boolean>>({
-        Home: false, Products: false, Pricing: false, Other: false, Policies: false,
+        Home: false,
+        Products: false,
+        Pricing: false,
+        Other: false,
+        Policies: false,
     });
+    const pathname = usePathname();
+    const search = useSearchParams();
+    useEffect(() => {
+        if (closeTimer.current) clearTimeout(closeTimer.current);
+        setHoverKey(null);
+        setOpenKey(null);
+        setMobileOpen(false);
+        setMobileExpanded({ Home: false, Products: false, Pricing: false, Other: false, Policies: false });
+        document.body.classList.remove("overflow-hidden");
+    }, [pathname, search?.toString()]);
 
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 32);
@@ -155,6 +166,13 @@ const Header = () => {
 
     const immediateClose = () => {
         if (closeTimer.current) clearTimeout(closeTimer.current);
+        setHoverKey(null);
+        setOpenKey(null);
+    };
+
+    const hardClose = () => {
+        if (closeTimer.current) clearTimeout(closeTimer.current);
+        setHoverKey(null);
         setOpenKey(null);
     };
 
@@ -179,7 +197,7 @@ const Header = () => {
             >
                 <div className="mx-auto max-w-7xl h-16 md:h-20 px-4 md:py-14 flex items-center justify-between gap-4 md:gap-8 transition-colors duration-300">
                     <div className="flex items-center gap-4 md:gap-8">
-                        <Link href="/" onMouseEnter={immediateClose} className="flex items-center">
+                        <Link href="/" onMouseEnter={immediateClose} onClick={hardClose} className="flex items-center">
                             <Image src={ravoLogo} className="h-10 w-auto md:h-16" alt="Logo" priority />
                         </Link>
                         <nav className="hidden md:flex items-center gap-8 font-mono">
@@ -190,6 +208,7 @@ const Header = () => {
                                         href={href}
                                         onMouseEnter={immediateClose}
                                         onFocus={immediateClose}
+                                        onClick={hardClose} // 👈 thêm
                                         className={`text-[16px] md:text-[18px] font-bold transition-colors ${isWhiteHeader ? "text-neutral-400 hover:text-black" : "text-neutral-400 hover:text-white"
                                             }`}
                                     >
@@ -249,6 +268,7 @@ const Header = () => {
                             items={LEFT_LIST[openKey]}
                             onKeepOpen={() => open(openKey)}
                             onClose={closeWithDelay}
+                            onNavigate={hardClose} // 👈 thêm
                             variants={panelVariants}
                         />
                     )}
@@ -291,13 +311,7 @@ const Header = () => {
                                     ✕
                                 </motion.button>
                             </div>
-                            <motion.nav
-                                className="flex-1 overflow-y-auto px-2 py-2"
-                                variants={mv.list}
-                                initial="initial"
-                                animate="animate"
-                                exit="exit"
-                            >
+                            <motion.nav className="flex-1 overflow-y-auto px-2 py-2" variants={mv.list} initial="initial" animate="animate" exit="exit">
                                 {NAV.map(({ key, label, href }) => {
                                     const hasSub = LEFT_LIST[key].length > 0;
 
@@ -320,29 +334,17 @@ const Header = () => {
                                             <button
                                                 className="w-full flex items-center justify-between rounded-xl px-4 py-3 text-base font-semibold text-neutral-800 hover:bg-neutral-100 active:scale-[0.995] transition"
                                                 aria-expanded={mobileExpanded[key]}
-                                                onClick={() =>
-                                                    setMobileExpanded((s) => ({ ...s, [key]: !s[key] }))
-                                                }
+                                                onClick={() => setMobileExpanded((s) => ({ ...s, [key]: !s[key] }))}
                                             >
                                                 <span>{label}</span>
-                                                <motion.span
-                                                    animate={{ rotate: mobileExpanded[key] ? 180 : 0 }}
-                                                    transition={{ type: "tween", duration: 0.2 }}
-                                                    className="inline-block"
-                                                >
+                                                <motion.span animate={{ rotate: mobileExpanded[key] ? 180 : 0 }} transition={{ type: "tween", duration: 0.2 }} className="inline-block">
                                                     ▾
                                                 </motion.span>
                                             </button>
 
                                             <AnimatePresence initial={false}>
                                                 {mobileExpanded[key] && (
-                                                    <motion.div
-                                                        variants={mv.acc}
-                                                        initial="initial"
-                                                        animate="animate"
-                                                        exit="exit"
-                                                        className="overflow-hidden"
-                                                    >
+                                                    <motion.div variants={mv.acc} initial="initial" animate="animate" exit="exit" className="overflow-hidden">
                                                         <ul className="px-3 pb-2">
                                                             {LEFT_LIST[key].map((sub) => (
                                                                 <li key={sub.label}>
@@ -370,9 +372,7 @@ const Header = () => {
                                                                                         ) : (
                                                                                             <div className="h-10 w-10 shrink-0 rounded bg-neutral-100" />
                                                                                         )}
-                                                                                        <span className="text-sm font-medium text-neutral-800 line-clamp-1">
-                                                                                            {it.label}
-                                                                                        </span>
+                                                                                        <span className="text-sm font-medium text-neutral-800 line-clamp-1">{it.label}</span>
                                                                                     </Link>
                                                                                 ))}
                                                                             </div>
@@ -400,11 +400,7 @@ const Header = () => {
                                         <span className="sr-only">Facebook Page</span>📘
                                     </motion.button>
                                 </div>
-                                <Link
-                                    href="tel:+13463267765"
-                                    className="text-white font-semibold text-sm bg-linear-to-r from-[#0C807E] to-[#86E3A8] px-3 py-2 rounded-lg shadow active:scale-[0.98] transition"
-                                    onClick={() => setMobileOpen(false)}
-                                >
+                                <Link href="tel:+13463267765" className="text-white font-semibold text-sm bg-linear-to-r from-[#0C807E] to-[#86E3A8] px-3 py-2 rounded-lg shadow active:scale-[0.98] transition" onClick={() => setMobileOpen(false)}>
                                     Call
                                 </Link>
                             </div>
@@ -412,7 +408,6 @@ const Header = () => {
                     </>
                 )}
             </AnimatePresence>
-
         </>
     );
 };
@@ -422,12 +417,14 @@ const PanelTwoCols = ({
     items,
     onKeepOpen,
     onClose,
+    onNavigate, // 👈 thêm
     variants,
 }: {
     openKey: string;
     items: LeftItem[];
     onKeepOpen: () => void;
     onClose: () => void;
+    onNavigate?: () => void; // 👈 thêm
     variants: Variants;
 }) => {
     const [activeLeft, setActiveLeft] = useState<string | null>(null);
@@ -456,6 +453,7 @@ const PanelTwoCols = ({
                                         <Link
                                             href={t.href}
                                             onMouseEnter={() => setActiveLeft(t.label)}
+                                            onClick={onNavigate} // 👈 đóng ngay khi click
                                             className={`block text-left text-[22px] leading-none font-semibold transition-colors ${isActive ? "text-neutral-900" : "text-neutral-400 hover:text-neutral-700"
                                                 }`}
                                         >
@@ -469,35 +467,18 @@ const PanelTwoCols = ({
                     <div className="col-span-12 md:col-span-9">
                         <AnimatePresence mode="wait">
                             {activeLeft && (
-                                <motion.div
-                                    key={activeLeft}
-                                    initial={{ opacity: 0, y: 8 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -8 }}
-                                    transition={{ duration: 0.18 }}
-                                >
+                                <motion.div key={activeLeft} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.18 }}>
                                     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-10">
                                         {(RIGHT_CONTENT[activeLeft] ?? []).map((it, idx) => (
-                                            <Link
-                                                key={`${it.label}-${idx}`}
-                                                href={it.href ?? "#"}
-                                                className="group flex flex-col items-center text-center cursor-pointer"
-                                            >
+                                            <Link key={`${it.label}-${idx}`} href={it.href ?? "#"} onClick={onNavigate} className="group flex flex-col items-center text-center cursor-pointer">
                                                 {it.img ? (
                                                     <div className="h-16 w-16 mb-2 relative">
-                                                        <Image
-                                                            src={it.img}
-                                                            alt={it.label}
-                                                            fill
-                                                            className="object-contain transition-transform group-hover:scale-110"
-                                                        />
+                                                        <Image src={it.img} alt={it.label} fill className="object-contain transition-transform group-hover:scale-110" />
                                                     </div>
                                                 ) : (
                                                     <div className="mb-2 h-8" />
                                                 )}
-                                                {it.label ? (
-                                                    <div className="text-sm font-semibold text-neutral-900">{it.label}</div>
-                                                ) : null}
+                                                {it.label ? <div className="text-sm font-semibold text-neutral-900">{it.label}</div> : null}
                                             </Link>
                                         ))}
                                     </div>
