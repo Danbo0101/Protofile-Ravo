@@ -11,12 +11,11 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import CallIcon from "@mui/icons-material/Call";
 import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close";
 import imgScreen from "@/app/assets/imgScreen.png";
 import imgCheck from "@/app/assets/imgCheck.png";
 import imgDigital from "@/app/assets/imgDigital.png";
 import imgTerminal from "@/app/assets/imgTerminal.png";
-import { usePathname, useSearchParams } from "next/navigation"; // 👈 thêm
+import { usePathname, useSearchParams } from "next/navigation";
 
 type MenuKey = "Home" | "Products" | "Pricing" | "Other" | "Policies";
 type LeftItem = { label: string; href: string };
@@ -195,10 +194,10 @@ const Header = () => {
                     closeWithDelay();
                 }}
             >
-                <div className="mx-auto max-w-7xl h-16 md:h-20 px-4 md:py-14 flex items-center justify-between gap-4 md:gap-8 transition-colors duration-300">
+                <div className="mx-auto max-w-7xl h-16 md:h-20 px-4 py-10 md:py-14 flex items-center justify-between gap-4 md:gap-8 transition-colors duration-300">
                     <div className="flex items-center gap-4 md:gap-8">
                         <Link href="/" onMouseEnter={immediateClose} onClick={hardClose} className="flex items-center">
-                            <Image src={ravoLogo} className="h-10 w-auto md:h-16" alt="Logo" priority />
+                            <Image src={ravoLogo} className="h-14 w-auto md:h-16" alt="Logo" priority />
                         </Link>
                         <nav className="hidden md:flex items-center gap-8 font-mono">
                             {NAV.map(({ key, label, href }) =>
@@ -208,7 +207,7 @@ const Header = () => {
                                         href={href}
                                         onMouseEnter={immediateClose}
                                         onFocus={immediateClose}
-                                        onClick={hardClose} // 👈 thêm
+                                        onClick={hardClose}
                                         className={`text-[16px] md:text-[18px] font-bold transition-colors ${isWhiteHeader ? "text-neutral-400 hover:text-black" : "text-neutral-400 hover:text-white"
                                             }`}
                                     >
@@ -250,7 +249,6 @@ const Header = () => {
                             </a>
                         </div>
 
-                        {/* Mobile hamburger */}
                         <button
                             className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/20"
                             aria-label="Open menu"
@@ -268,7 +266,7 @@ const Header = () => {
                             items={LEFT_LIST[openKey]}
                             onKeepOpen={() => open(openKey)}
                             onClose={closeWithDelay}
-                            onNavigate={hardClose} // 👈 thêm
+                            onNavigate={hardClose}
                             variants={panelVariants}
                         />
                     )}
@@ -287,7 +285,7 @@ const Header = () => {
                             onClick={() => setMobileOpen(false)}
                         />
                         <motion.aside
-                            className="fixed inset-y-0 right-0 z-61 w-[88%] max-w-[380px] bg-white text-black shadow-2xl md:hidden flex flex-col rounded-l-2xl"
+                            className="fixed inset-y-0 right-0 z-61 w-[88%] max-w-[380px] bg-white/70 text-black shadow-2xl md:hidden flex flex-col rounded-l-2xl"
                             variants={mv.sheet}
                             initial="initial"
                             animate="animate"
@@ -388,22 +386,43 @@ const Header = () => {
                                     );
                                 })}
                             </motion.nav>
-                            <div className="border-t border-neutral-200 p-3 flex items-center justify-between">
-                                <div className="flex items-center gap-1">
-                                    <motion.button whileTap={{ scale: 0.9 }} onClick={() => window.open("https://www.facebook.com/thonguyenzota", "_blank")} className="p-2 rounded-md hover:bg-neutral-100">
-                                        <span className="sr-only">Facebook (Tho Nguyen)</span>👍
+                            <div className="border-t border-neutral-200 px-4 py-3 flex  items-center justify-between  backdrop-blur-md">
+                                <div className="flex items-center gap-1 sm:gap-2">
+                                    <motion.button
+                                        whileTap={{ scale: 0.9 }}
+                                        onClick={() => window.open("https://www.facebook.com/thonguyenzota", "_blank")}
+                                        className="group p-2 rounded-lg transition-all hover:bg-linear-to-r hover:from-[#0C807E]/10 hover:to-[#86E3A8]/20"
+                                    >
+                                        <span className="sr-only">Facebook (Tho Nguyen)</span>
+                                        <FacebookOutlinedIcon className="text-neutral-600 group-hover:text-[#0C807E] transition" fontSize="small" />
                                     </motion.button>
-                                    <motion.button whileTap={{ scale: 0.9 }} onClick={() => window.open("https://www.instagram.com/ravopos_tho_nguyen", "_blank")} className="p-2 rounded-md hover:bg-neutral-100">
-                                        <span className="sr-only">Instagram</span>📷
+
+                                    <motion.button
+                                        whileTap={{ scale: 0.9 }}
+                                        onClick={() => window.open("https://www.instagram.com/ravopos_tho_nguyen", "_blank")}
+                                        className="group p-2 rounded-lg transition-all hover:bg-linear-to-r hover:from-[#0C807E]/10 hover:to-[#86E3A8]/20"
+                                    >
+                                        <span className="sr-only">Instagram</span>
+                                        <InstagramIcon className="text-neutral-600 group-hover:text-[#0C807E] transition" fontSize="small" />
                                     </motion.button>
-                                    <motion.button whileTap={{ scale: 0.9 }} onClick={() => window.open("https://www.facebook.com/RavoPosByThoNguyen", "_blank")} className="p-2 rounded-md hover:bg-neutral-100">
-                                        <span className="sr-only">Facebook Page</span>📘
+
+                                    <motion.button
+                                        whileTap={{ scale: 0.9 }}
+                                        onClick={() => window.open("https://www.facebook.com/RavoPosByThoNguyen", "_blank")}
+                                        className="group p-2 rounded-lg transition-all hover:bg-linear-to-r hover:from-[#0C807E]/10 hover:to-[#86E3A8]/20"
+                                    >
+                                        <span className="sr-only">Facebook Page</span>
+                                        <FacebookIcon className="text-neutral-600 group-hover:text-[#0C807E] transition" fontSize="small" />
                                     </motion.button>
                                 </div>
-                                <Link href="tel:+13463267765" className="text-white font-semibold text-sm bg-linear-to-r from-[#0C807E] to-[#86E3A8] px-3 py-2 rounded-lg shadow active:scale-[0.98] transition" onClick={() => setMobileOpen(false)}>
-                                    Call
-                                </Link>
+                                <a
+                                    href="tel:+13463267765"
+                                    className="ml-2 flex items-center gap-2 text-white font-bold text-[14px] md:text-[15px] bg-linear-to-r from-[#0C807E] to-[#86E3A8] px-4 py-2 md:px-6 md:py-3 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl"
+                                >
+                                    <CallIcon sx={{ fontSize: 18 }} /> (346) 326-7765
+                                </a>
                             </div>
+
                         </motion.aside>
                     </>
                 )}
@@ -417,14 +436,14 @@ const PanelTwoCols = ({
     items,
     onKeepOpen,
     onClose,
-    onNavigate, // 👈 thêm
+    onNavigate,
     variants,
 }: {
     openKey: string;
     items: LeftItem[];
     onKeepOpen: () => void;
     onClose: () => void;
-    onNavigate?: () => void; // 👈 thêm
+    onNavigate?: () => void;
     variants: Variants;
 }) => {
     const [activeLeft, setActiveLeft] = useState<string | null>(null);
@@ -453,7 +472,7 @@ const PanelTwoCols = ({
                                         <Link
                                             href={t.href}
                                             onMouseEnter={() => setActiveLeft(t.label)}
-                                            onClick={onNavigate} // 👈 đóng ngay khi click
+                                            onClick={onNavigate}
                                             className={`block text-left text-[22px] leading-none font-semibold transition-colors ${isActive ? "text-neutral-900" : "text-neutral-400 hover:text-neutral-700"
                                                 }`}
                                         >

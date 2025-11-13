@@ -23,7 +23,7 @@ function Field({
         <div className="space-y-1.5">
             <label
                 htmlFor={id}
-                className="block text-sm font-medium text-gray-800"
+                className="block font-medium text-gray-800 text-sm"
             >
                 {label}
             </label>
@@ -74,14 +74,14 @@ export default function TrySectionPretty() {
     }
 
     return (
-        <section className="mx-auto max-w-7xl px-5 lg:px-8 py-20 rounded-2xl shadow-2xl bg-gray-100">
-            <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-20">
-                <div className="text-center lg:text-left space-y-4">
+        <section className="bg-gray-100 shadow-2xl mx-auto px-5 lg:px-8 py-20 rounded-2xl max-w-7xl">
+            <div className="items-center gap-12 lg:gap-20 grid grid-cols-1 lg:grid-cols-2">
+                <div className="space-y-4 lg:text-left text-center">
                     <motion.h2
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="font-serif text-5xl leading-tight sm:text-6xl lg:text-7xl text-black"
+                        className="font-serif text-black text-5xl sm:text-6xl lg:text-7xl leading-tight"
                     >
                         Try RAVO
                     </motion.h2>
@@ -90,22 +90,22 @@ export default function TrySectionPretty() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
-                        className="text-xl sm:text-2xl text-gray-700 font-light tracking-wide"
+                        className="font-light text-gray-700 text-xl sm:text-2xl tracking-wide"
                     >
-                        <span className="text-[#956D30] font-medium">The Smart POS</span>{" "}
+                        <span className="font-medium text-[#956D30]">The Smart POS</span>{" "}
                         for Modern Nail Salons.
                     </motion.p>
                 </div>
 
                 <div>
-                    <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-black">
+                    <h3 className="font-semibold text-black text-2xl sm:text-3xl tracking-tight">
                         Learn about new features and hear stories from other nail salons.
                     </h3>
 
                     <form
                         ref={formRef}
                         onSubmit={onSubmit}
-                        className="mt-6 space-y-5"
+                        className="space-y-5 mt-6"
                     >
                         <input
                             type="hidden"
@@ -157,12 +157,12 @@ export default function TrySectionPretty() {
                             </button>
                         </div>
 
-                        <p className="text-sm font-serif text-gray-500 text-center">
+                        <p className="font-serif text-gray-500 text-sm text-center">
                             *This information may be transcribed, used, and stored by third
                             parties in accordance with our{" "}
                             <a
                                 href="/privacy"
-                                className="font-bold underline underline-offset-2 hover:text-black"
+                                className="font-bold hover:text-black underline underline-offset-2"
                             >
                                 Privacy Policy
                             </a>.

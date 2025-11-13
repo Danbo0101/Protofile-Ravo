@@ -32,3 +32,18 @@ body {
 .faq-body {
   font-weight: 100;
 }
+
+@keyframes scroll-x {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-x {
+  display: inline-block;
+  animation: scroll-x 25s linear infinite;
+}
