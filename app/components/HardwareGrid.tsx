@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 
-// ====== TYPES ======
 type Card = {
     eyebrow: string;
     title: string;
@@ -15,7 +14,6 @@ type Card = {
     imgAlt: string;
 };
 
-// ====== PROPS ======
 interface HardwareGridProps {
     cards: Card[];
     fadeUp: any;
@@ -31,14 +29,14 @@ export default function HardwareGrid({
     title = "Other hardware options",
 }: HardwareGridProps) {
     return (
-        <section className="w-full bg-neutral-50 py-16 text-black sm:py-20">
-            <div className="mx-auto max-w-7xl px-6 sm:px-8">
+        <section className="bg-neutral-50 py-16 sm:py-20 w-full text-black">
+            <div className="mx-auto px-6 sm:px-8 max-w-7xl">
                 <motion.h2
                     variants={fadeUp}
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: true, amount: 0.3 }}
-                    className="text-center font-serif text-4xl font-extrabold tracking-tight sm:text-5xl py-10"
+                    className="py-10 font-serif font-extrabold text-4xl sm:text-5xl text-center tracking-tight"
                 >
                     {title}
                 </motion.h2>
@@ -48,19 +46,19 @@ export default function HardwareGrid({
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: true, amount: 0.2 }}
-                    className="mt-10 grid gap-6 sm:mt-12 sm:grid-cols-2 lg:grid-cols-3"
+                    className="gap-6 grid sm:grid-cols-2 lg:grid-cols-3 mt-10 sm:mt-12"
                 >
                     {cards.map((c) => (
                         <Link key={c.href} href={c.href} className="group block cursor-pointer">
                             <motion.article
                                 variants={fadeUp}
-                                className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition-transform duration-300 group-hover:-translate-y-1"
+                                className="bg-white shadow-sm p-6 border border-neutral-200 rounded-3xl transition-transform group-hover:-translate-y-1 duration-300"
                             >
-                                <div className="text-sm font-medium text-neutral-500">{c.eyebrow}</div>
+                                <div className="font-medium text-neutral-500 text-sm">{c.eyebrow}</div>
 
-                                <h3 className="mt-2 text-2xl font-semibold leading-snug">{c.title}</h3>
+                                <h3 className="mt-2 font-semibold text-2xl leading-snug">{c.title}</h3>
 
-                                <div className="relative mt-8 h-48 w-full">
+                                <div className="relative mt-8 w-full h-48">
                                     <Image
                                         src={c.img}
                                         alt={c.imgAlt}
@@ -70,7 +68,7 @@ export default function HardwareGrid({
                                     />
                                 </div>
 
-                                <div className="mt-8 text-base font-semibold">
+                                <div className="mt-8 font-semibold text-base">
                                     <span className="inline-flex items-center gap-2 text-black">
                                         Learn more
                                         <ArrowOutwardIcon fontSize="small" />

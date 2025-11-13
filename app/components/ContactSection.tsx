@@ -161,7 +161,7 @@ export default function TrySectionPretty() {
                             *This information may be transcribed, used, and stored by third
                             parties in accordance with our{" "}
                             <a
-                                href="/privacy"
+                                href="/policies/privacy/"
                                 className="font-bold hover:text-black underline underline-offset-2"
                             >
                                 Privacy Policy

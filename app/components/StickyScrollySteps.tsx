@@ -57,30 +57,32 @@ export default function StickyScrollySteps({ steps }: StepsProp) {
 
     return (
         <section className="relative w-full">
-            <div className="md:hidden space-y-10 mx-auto px-4 py-8">
+            <div className="md:hidden space-y-6 mx-auto px-4 py-8 sm:py-10 max-w-2xl">
                 {normalized.map((s, i) => (
                     <article
                         key={i}
-                        className="bg-white shadow-sm border border-neutral-200 rounded-3xl overflow-hidden"
+                        className="bg-white/95 shadow-[0_18px_40px_rgba(15,23,42,0.08)] border border-neutral-200/70 rounded-3xl overflow-hidden"
                     >
                         <img
                             src={s.img}
                             alt={s.title}
-                            className="w-full object-cover aspect-4/3"
+                            className="w-full h-auto object-cover aspect-4/3 sm:aspect-video"
+                            loading={i === 0 ? "eager" : "lazy"}
                         />
-                        <div className="space-y-5 p-5">
-                            <h3 className="font-semibold text-neutral-900 text-xl">
+                        <div className="space-y-3 p-5 sm:p-6">
+                            <h3 className="font-semibold text-neutral-900 text-lg sm:text-xl leading-snug">
                                 {s.title}
                             </h3>
-                            <p className="mt-2 text-neutral-600 leading-relaxed">
-                                {s.bullets.map(b => b.text).join(" • ")}
+                            <p className="text-neutral-600 text-sm sm:text-base leading-relaxed">
+                                {s.bullets.map((b) => b.text).join(" • ")}
                             </p>
                         </div>
                     </article>
                 ))}
             </div>
+
             <div className="hidden md:block" style={{ height: totalH }}>
-                <div className="gap-6 grid grid-cols-1 md:grid-cols-2 mx-auto px-6 h-1/2">
+                <div className="gap-6 grid grid-cols-1 md:grid-cols-2 mx-auto px-6 max-w-6xl h-1/2">
                     <div className="relative">
                         <div className="top-0 sticky flex justify-center items-center rounded-3xl h-screen overflow-hidden">
                             <AnimatePresence initial={false} mode="sync">
@@ -90,7 +92,10 @@ export default function StickyScrollySteps({ steps }: StepsProp) {
                                     alt={normalized[prevActive].title}
                                     className="rounded-3xl w-full h-8/15 object-cover will-change-[opacity,transform]"
                                     initial={{ opacity: 1, scale: 1 }}
-                                    animate={{ opacity: active === prevActive ? 1 : 0, scale: 1.005 }}
+                                    animate={{
+                                        opacity: active === prevActive ? 1 : 0,
+                                        scale: 1.005,
+                                    }}
                                     exit={{ opacity: 0, scale: 1.005 }}
                                     transition={{ duration: 0.45, ease: "easeOut" }}
                                 />
@@ -107,6 +112,7 @@ export default function StickyScrollySteps({ steps }: StepsProp) {
                             </AnimatePresence>
                         </div>
                     </div>
+
                     <div className="relative">
                         {normalized.map((s, i) => (
                             <div
@@ -115,11 +121,19 @@ export default function StickyScrollySteps({ steps }: StepsProp) {
                                 ref={(el) => setStepRef(el, i)}
                                 className="flex items-center min-h-screen"
                             >
-                                <article className={`mx-auto w-full p-8 ${i === active ? "bg-white" : "bg-white/70"}`}>
+                                <article
+                                    className={[
+                                        "mx-auto w-full p-8 rounded-3xl transition-colors duration-300",
+                                        i === active ? "bg-white" : "bg-white/70",
+                                    ].join(" ")}
+                                >
                                     <motion.h3
                                         className="font-extrabold text-gray-900 text-2xl md:text-3xl"
                                         initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: i === active ? 1 : 0.7, y: i === active ? 0 : 6 }}
+                                        animate={{
+                                            opacity: i === active ? 1 : 0.7,
+                                            y: i === active ? 0 : 6,
+                                        }}
                                         transition={{ duration: 0.55, ease: "easeOut" }}
                                     >
                                         {s.title}
@@ -130,8 +144,14 @@ export default function StickyScrollySteps({ steps }: StepsProp) {
                                     <ul className="space-y-5">
                                         {s.bullets.map((b, j) => (
                                             <li key={j} className="flex items-start gap-3">
-                                                {b.icon ? <div className="mt-0.5 shrink-0">{b.icon}</div> : null}
-                                                <p className="text-gray-600 leading-relaxed">{b.text}</p>
+                                                {b.icon ? (
+                                                    <div className="mt-0.5 shrink-0">
+                                                        {b.icon}
+                                                    </div>
+                                                ) : null}
+                                                <p className="text-gray-600 leading-relaxed">
+                                                    {b.text}
+                                                </p>
                                             </li>
                                         ))}
                                     </ul>
@@ -141,9 +161,10 @@ export default function StickyScrollySteps({ steps }: StepsProp) {
                     </div>
                 </div>
 
-                <div className="right-0 bottom-0 left-0 absolute bg-linear-to-b from-transparent to-white h-24 pointer-events-none" />
+                <div className="bottom-0 absolute inset-x-0 bg-linear-to-b from-transparent to-white h-24 pointer-events-none" />
             </div>
         </section>
+
     );
 }
 

@@ -12,7 +12,6 @@ import { toast } from "sonner";
 
 import CheckIcon from '@mui/icons-material/Check';
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
-import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import PaidIcon from "@mui/icons-material/Paid";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
@@ -22,7 +21,7 @@ import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 
 import imgMainScreen from "@/app/assets/imgMainScreen.png";
 import imgMainScreen1 from "@/app/assets/imgMainScreen1.png";
-import imgQRPayment from "@/app/assets/imgQRPayment.png";
+import imgTapPay from "@/app/assets/imgTapPay.png";
 import imgTurn from "@/app/assets/imgTurn.png";
 import imgCheckMainScreen from "@/app/assets/imgCheckMainScreen.png";
 import imgPayroll from "@/app/assets/imgPayroll.png";
@@ -33,6 +32,7 @@ import imgTerminal from "@/app/assets/imgTerminal.png";
 
 import AccordionItem from "@/app/components/AccordionItem";
 import HardwareGrid from "@/app/components/HardwareGrid";
+import { stagger, fadeUp, EASE_OUT } from "@/app/components/variants";
 
 type Tab = {
     id: string;
@@ -48,6 +48,20 @@ type Tab = {
 };
 
 type Tile = { label: string; Icon: any; bg: string };
+
+const slide: Variants = {
+    hidden: (dir: 1 | -1) => ({ opacity: 0, x: 28 * dir }),
+    show: {
+        opacity: 1,
+        x: 0,
+        transition: { duration: 0.45, ease: EASE_OUT },
+    },
+    exit: (dir: 1 | -1) => ({
+        opacity: 0,
+        x: -28 * dir,
+        transition: { duration: 0.35, ease: EASE_OUT },
+    }),
+};
 
 const CARDS = [
     {
@@ -74,36 +88,6 @@ const CARDS = [
 ];
 
 const TARGET_EMAIL = "nguyenhuutho029@gmail.com";
-
-const EASE_OUT: Transition["ease"] = [0.22, 1, 0.36, 1];
-
-const fadeUp: Variants = {
-    hidden: { opacity: 0, y: 40 },
-    show: {
-        opacity: 1,
-        y: 0,
-        transition: { duration: 0.7, ease: EASE_OUT },
-    },
-};
-
-const stagger: Variants = {
-    hidden: {},
-    show: { transition: { staggerChildren: 0.15 } },
-};
-
-const slide: Variants = {
-    hidden: (dir: 1 | -1) => ({ opacity: 0, x: 28 * dir }),
-    show: {
-        opacity: 1,
-        x: 0,
-        transition: { duration: 0.45, ease: EASE_OUT },
-    },
-    exit: (dir: 1 | -1) => ({
-        opacity: 0,
-        x: -28 * dir,
-        transition: { duration: 0.35, ease: EASE_OUT },
-    }),
-};
 
 const TABS: Tab[] = [
     {
@@ -256,55 +240,57 @@ const MainScreenPage = () => {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
 
     return (
-        <main className="min-h-screen w-full bg-white text-white">
-            <section className="relative h-screen min-h-[620px] w-full overflow-hidden">
+        <main className="bg-white w-full min-h-screen text-white">
+            <section className="relative w-full h-screen overflow-hidden">
                 <div className="absolute inset-0">
                     <Image
                         src={imgMainScreen}
                         alt="RAVO POS Main Screen Background"
                         fill
                         priority
-                        className="object-cover"
+                        className="object-[80%_90%] object-cover sm:object-center"
                         sizes="100vw"
                     />
-                    <div className="absolute inset-0 bg-linear-to-b from-black/50 via-black/20 to-white/20" />
+
+
+                    <div className="absolute inset-0 bg-linear-to-b from-black/70 sm:from-black/50 via-black/45 sm:via-black/20 to-white/5 sm:to-white/20" />
                 </div>
-                <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center px-6 sm:px-10 lg:px-12">
+                <div className="z-10 relative flex items-center mx-auto px-6 md:px-12 max-w-7xl h-full">
                     <motion.div
                         initial={{ opacity: 0, y: 40 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.9, ease: "easeOut" }}
                         className="max-w-2xl"
                     >
-                        <p className="mb-4 font-mono text-sm uppercase tracking-[0.18em] text-white/60">
+                        <p className="mb-4 font-mono text-white/60 text-xs md:text-sm uppercase tracking-[0.18em]">
                             RAVO Main Screen
                         </p>
 
-                        <h1 className="text-balance font-serif text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
+                        <h1 className="font-serif font-semibold text-4xl lg:text-6xl text-balance leading-tight">
                             A fully-integrated POS register
                             <br />
                             <span className="text-white/90">built for nail salons.</span>
                         </h1>
 
-                        <p className="mt-6 font-light text-lg leading-relaxed text-white/70">
+                        <p className="mt-6 font-light text-[15px] text-white/70 md:text-lg leading-relaxed">
                             Handle check-in/out, payments, commissions, memberships, and reports —
                             all in one clean, intuitive interface designed for modern salons.
                         </p>
 
-                        <div className="mt-10 flex flex-wrap items-center gap-4">
+                        <div className="flex flex-wrap items-center gap-4 mt-10">
                             <Link
-                                href="/contact"
-                                className="rounded-full border border-white/60 px-8 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-white hover:scale-105 hover:text-black"
+                                href="tel:+13463267765"
+                                className="hover:bg-white px-6 md:px-8 py-2 md:py-3 border border-white/60 rounded-full font-bold text-white hover:text-black text-sm md:text-base hover:scale-105 transition-all duration-300"
                             >
                                 Connect with me
                             </Link>
                         </div>
                     </motion.div>
                 </div>
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-linear-to-t from-white/20 via-white/10 to-transparent" />
+                <div className="bottom-0 absolute inset-x-0 bg-linear-to-t from-white/20 via-white/10 to-transparent h-48 pointer-events-none" />
             </section>
-            <section className="w-full px-20 py-14  text-black">
-                <section className="mx-auto max-w-6xl px-6 py-16 sm:px-8 lg:py-24">
+            <section className="px-4 sm:px-8 lg:px-20 py-12 sm:py-14 w-full text-black">
+                <section className="mx-auto px-2 sm:px-6 lg:px-8 py-10 sm:py-16 lg:py-24 max-w-6xl">
                     <motion.div
                         variants={fadeUp}
                         initial="hidden"
@@ -312,58 +298,62 @@ const MainScreenPage = () => {
                         viewport={{ once: true, amount: 0.3 }}
                         className="text-center"
                     >
-                        <h1 className="font-semibold font-serif tracking-tight text-4xl leading-tight sm:text-5xl lg:text-6xl">
+                        <h1 className="font-serif font-semibold text-3xl md:text-6xl leading-snug sm:leading-tight tracking-tight">
                             Our Powerful Point of Sale System
                         </h1>
-                        <p className="mx-auto mt-6 max-w-3xl text-[17px] leading-relaxed text-neutral-600">
-                            Your success is our focus. RAVO’s <span className="font-medium">nail salon point of sale system</span>
-                            keeps check-in lines short and finances clear. Combining <strong>integrated payments</strong>,
-                            <strong> effortless turn management</strong>, and <strong>payroll in minutes</strong>, so your team
+                        <p className="mx-auto mt-10 sm:mt-6 max-w-3xl text-[15px] text-neutral-600 sm:text-[17px] leading-relaxed">
+                            Your success is our focus. RAVO’s{" "}
+                            <span className="font-medium">nail salon point of sale system</span>
+                            {" "}keeps check-in lines short and finances clear. Combining{" "}
+                            <strong>integrated payments</strong>,
+                            <strong> effortless turn management</strong>, and{" "}
+                            <strong>payroll in minutes</strong>, so your team
                             can focus on clients and your business can grow with confidence.
                         </p>
                     </motion.div>
                 </section>
-                <section className="mx-auto max-w-7xl px-6 pb-20 sm:px-8 lg:pb-28">
+
+                <section className="mx-auto px-2 sm:px-6 lg:px-8 pb-16 sm:pb-20 lg:pb-28 max-w-7xl">
                     <motion.div
                         variants={stagger}
                         initial="hidden"
                         whileInView="show"
                         viewport={{ once: true, amount: 0.3 }}
-                        className="grid items-center gap-12 lg:grid-cols-2"
+                        className="items-center gap-10 lg:gap-12 grid lg:grid-cols-2"
                     >
                         <motion.figure
                             variants={fadeUp}
-                            className="relative w-full overflow-hidden"
+                            className="relative mx-auto w-full lg:max-w-none max-w-md overflow-hidden"
                         >
-                            <div className="relative aspect-square">
+                            <div className="relative aspect-4/3 sm:aspect-square">
                                 <Image
                                     src={imgMainScreen1}
                                     alt="RAVO POS System"
                                     fill
                                     priority
-                                    className="object-contain p-6"
+                                    className="p-4 sm:p-6 object-contain"
                                     sizes="(max-width: 1024px) 100vw, 50vw"
                                 />
                             </div>
                         </motion.figure>
                         <motion.div variants={fadeUp} className="lg:pl-4">
-                            <h2 className="text-3xl font-semibold font-serif tracking-tight sm:text-[34px]">
+                            <h2 className="font-serif font-semibold md:text-[34px] text-2xl tracking-tight">
                                 See More. Do More.
                             </h2>
-                            <p className="mt-2 text-base font-medium text-neutral-500">
+                            <p className="mt-2 font-medium text-neutral-500 text-sm md:text-base">
                                 Bigger RAVO POS Screen
                             </p>
 
-                            <p className="mt-4 text-[18px] leading-relaxed text-neutral-900">
+                            <p className="mt-4 text-[15px] text-neutral-900 sm:text-[18px] leading-relaxed">
                                 Get more done on a bigger screen. Technicians and managers can
                                 view service menus, client profiles, ticket details, tips, and
                                 commissions without constantly switching windows.
                             </p>
 
-                            <ul className="mt-8 space-y-4 text-[17px] text-neutral-800">
+                            <ul className="space-y-3 sm:space-y-4 mt-6 sm:mt-8 text-[15px] text-neutral-800 md:text-[17px]">
                                 <li className="flex items-start gap-3">
                                     <CheckIcon
-                                        className="mt-0.5 shrink-0 "
+                                        className="mt-0.5 shrink-0"
                                         fontSize="small"
                                     />
                                     <span>
@@ -392,46 +382,49 @@ const MainScreenPage = () => {
                                 </li>
                             </ul>
 
-                            <p className="mt-8 text-[17px] leading-relaxed text-neutral-600 italic">
+                            <p className="mt-6 sm:mt-8 text-[15px] text-neutral-600 sm:text-[17px] italic leading-relaxed">
                                 Result: a front desk that feels calm, even when the salon is busy.
                             </p>
                         </motion.div>
                     </motion.div>
                 </section>
-                <div className="max-w-5xl mx-auto border-t border-neutral-200 mt-10" />
+
+                <div className="mx-auto mt-8 sm:mt-10 border-neutral-200 border-t max-w-5xl" />
             </section>
-            <section className="min-h-screen w-full  text-black">
+            <section className="px-4 sm:px-6 lg:px-20 pt-14 sm:pt-16 pb-16 w-full text-black">
                 <motion.section
                     variants={stagger}
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: true, amount: 0.35 }}
-                    className="w-full flex flex-col items-center gap-4 px-6 pt-16 pb-12 sm:pt-20"
+                    className="flex flex-col items-center gap-4 w-full"
                 >
                     <motion.h1
                         variants={fadeUp}
-                        className="text-4xl font-serif font-extrabold leading-tight tracking-tight sm:text-6xl sm:leading-[1.1]"
+                        className="font-serif font-extrabold text-3xl md:text-6xl text-center leading-snug sm:leading-[1.1] tracking-tight"
                     >
                         Learn more about what
-                        <br className="hidden sm:block" /> Square can do for you.
+                        <br className="hidden sm:block" /> RAVO can do for you.
                     </motion.h1>
 
-                    <motion.p variants={fadeUp} className="mt-6 text-lg text-black/70">
-                        Join our mailing list for more information about how Square’s solutions can
-                        serve your entire business.
+                    <motion.p
+                        variants={fadeUp}
+                        className="mt-4 sm:mt-6 max-w-2xl text-black/70 text-base sm:text-lg text-center"
+                    >
+                        Join our mailing list to get insights, updates, and smart tools that help your nail salon work faster and grow effortlessly.
                     </motion.p>
 
                     <motion.form
                         variants={fadeUp}
                         onSubmit={onSubmit}
-                        className="mt-6 w-full max-w-3xl"
+                        className="mt-5 sm:mt-6 w-full max-w-3xl"
                         aria-label="Join our mailing list"
                     >
                         <label htmlFor="email" className="sr-only">
                             Email address
                         </label>
 
-                        <div className="group flex items-center gap-3 rounded-md border border-black/15 bg-white p-1 focus-within:border-black/40">
+                        <div className="group flex sm:flex-row flex-col items-stretch sm:items-center gap-2 sm:gap-3 bg-white p-1.5 sm:p-1 md:border border-black/15 focus-within:border-black/40 rounded-md">
                             <input
                                 id="email"
                                 type="email"
@@ -440,24 +433,31 @@ const MainScreenPage = () => {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 autoComplete="email"
-                                className="h-11 w-full flex-1 rounded-md px-4 text-base outline-none"
+                                className="flex-1 px-3 sm:px-4 py-4 md:py-0 border border-black/15 md:border-0 rounded-md outline-none w-full h-11 sm:h-12 text-sm sm:text-base"
                             />
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="inline-flex cursor-pointer h-11 shrink-0 items-center justify-center rounded-md bg-black px-5 text-sm font-semibold text-white transition hover:scale-105 hover:text-black hover:bg-white hover:border hover:border-black hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+                                className="inline-flex justify-center items-center bg-black hover:bg-white hover:opacity-90 disabled:opacity-50 px-4 sm:px-5 rounded-md w-full sm:w-auto h-11 sm:h-12 font-semibold text-white hover:text-black text-sm hover:scale-105 transition cursor-pointer disabled:cursor-not-allowed shrink-0"
                             >
                                 {loading ? "Sending..." : "Submit"}
                             </button>
                         </div>
                     </motion.form>
 
-                    <motion.p variants={fadeUp} className="mt-3 text-xs text-black/50">
+                    <motion.p
+                        variants={fadeUp}
+                        className="mt-3 max-w-md text-[11px] text-black/50 sm:text-xs text-center"
+                    >
                         *This information may be transcribed, used, and stored by third parties in
-                        accordance with our <span
-                            className="underline hover:text-black cursor-pointer"
-                            onClick={() => window.open("/privacy", "_blank")}
-                        >Privacy Policy</span>.
+                        accordance with our{" "}
+                        <span
+                            className="hover:text-black underline cursor-pointer"
+                            onClick={() => window.open("/policies/privacy/", "_blank")}
+                        >
+                            Privacy Policy
+                        </span>
+                        .
                     </motion.p>
                 </motion.section>
                 <motion.section
@@ -465,19 +465,19 @@ const MainScreenPage = () => {
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: true, amount: 0.25 }}
-                    className="mx-auto max-w-6xl px-6 pb-20"
+                    className="mx-auto mt-10 sm:mt-12 px-0 sm:px-2 pb-4 sm:pb-8 w-full max-w-6xl"
                 >
                     <motion.div
                         variants={fadeUp}
-                        className="rounded-2xl border border-black/10 bg-black/2 p-4 sm:p-6"
+                        className="bg-black/2 p-3 sm:p-6 border border-black/10 rounded-2xl"
                     >
-                        <div className="grid grid-cols-1 items-center gap-6 md:grid-cols-2 md:gap-10">
+                        <div className="items-center gap-6 md:gap-10 grid grid-cols-1 md:grid-cols-2">
                             <motion.div
                                 variants={fadeUp}
-                                className="relative aspect-16/11 w-full overflow-hidden rounded-xl"
+                                className="relative rounded-xl w-full aspect-16/11 overflow-hidden"
                             >
                                 <Image
-                                    src={imgQRPayment}
+                                    src={imgTapPay}
                                     alt="Cash App Pay at the counter"
                                     fill
                                     sizes="(max-width: 768px) 100vw, 50vw"
@@ -485,58 +485,76 @@ const MainScreenPage = () => {
                                     priority
                                 />
                             </motion.div>
-
-                            {/* Text */}
-                            <motion.div variants={fadeUp} className="py-2">
-                                <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-                                    Take Cash App pay, too
+                            <motion.div variants={fadeUp} className="py-1 sm:py-2">
+                                <h2 className="font-semibold text-xl sm:text-2xl lg:text-3xl tracking-tight">
+                                    RAVO Tap-to-Pay
                                 </h2>
-                                <p className="mt-3 text-base leading-7 text-black/70">
-                                    It’s fast, simple, and connects you with a network of 70+ million
-                                    customers who discover new businesses like yours every day.
+
+                                <p className="mt-3 text-black/70 text-sm sm:text-base leading-7">
+                                    Soon, your clients will be able to <span className="font-medium text-black">tap their phone to pay directly in the RAVO App</span> — fast, contactless, and effortless. A modern checkout experience designed for busy salons.
                                 </p>
-                                <p className="mt-1 text-base leading-7 text-black/70">Every day.</p>
+
+                                <p className="mt-2 font-semibold text-black/80 text-sm sm:text-base">
+                                    Launching soon.
+                                </p>
                             </motion.div>
+
                         </div>
                     </motion.div>
                 </motion.section>
             </section>
-            <section className="min-h-screen w-full py-14 bg-[#f2f2f2] text-black">
+            <section className="bg-[#f2f2f2] py-12 sm:py-14 w-full min-h-screen text-black">
                 <motion.div
                     variants={stagger}
                     initial="hidden"
                     animate="show"
-                    className="mx-auto max-w-6xl px-6 pt-16 sm:pt-20"
+                    className="mx-auto px-4 sm:px-6 pt-12 sm:pt-16 max-w-6xl"
                 >
                     <motion.h1
                         variants={fadeUp}
-                        className="text-center pb-10 font-serif text-4xl font-extrabold leading-tight tracking-tight sm:text-6xl sm:leading-[1.08]"
+                        className="pb-8 sm:pb-10 font-serif font-extrabold text-3xl md:text-6xl text-center leading-snug sm:leading-[1.08] tracking-tight"
                     >
                         RAVO POS System Features
                     </motion.h1>
 
-                    <div className="mx-auto mt-6 flex w-full max-w-xl items-center justify-center gap-3 rounded-full bg-black/5 p-2">
-                        {TABS.map((t, i) => {
-                            const selected = i === active;
-                            return (
-                                <button
-                                    key={t.id}
-                                    onClick={() => onSelect(i)}
-                                    className={[
-                                        "cursor-pointer rounded-full px-4 py-2 text-sm transition",
-                                        selected
-                                            ? "bg-white font-semibold shadow-sm"
-                                            : "text-black/70 hover:bg-white/60",
-                                    ].join(" ")}
-                                >
-                                    {t.label}
-                                </button>
-                            );
-                        })}
+                    <div className="mx-auto mt-4 sm:mt-6 w-full max-w-xl">
+                        <div className="relative">
+                            {/* Thanh tab */}
+                            <div className="flex items-center gap-2 sm:gap-3 bg-black/5 p-1.5 sm:p-2 rounded-full w-full sm:overflow-visible overflow-x-auto no-scrollbar">
+                                {TABS.map((t, i) => {
+                                    const selected = i === active;
+                                    return (
+                                        <button
+                                            key={t.id}
+                                            onClick={() => onSelect(i)}
+                                            className={[
+                                                "cursor-pointer rounded-full px-3.5 py-1.5 sm:px-4 sm:py-2 text-[13px] sm:text-sm transition whitespace-nowrap",
+                                                "shrink-0",
+                                                selected
+                                                    ? "bg-white font-semibold shadow-sm text-black ring-1 ring-black/5"
+                                                    : "text-black/70 hover:bg-white/70 hover:text-black",
+                                            ].join(" ")}
+                                        >
+                                            {t.label}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                            {TABS.length > 3 && (
+                                <div className="sm:hidden right-0 absolute inset-y-0 bg-linear-to-l from-[#f2f2f2] to-transparent rounded-full w-10 pointer-events-none" />
+                            )}
+                        </div>
+                        {TABS.length > 3 && (
+                            <p className="sm:hidden mt-1 text-[11px] text-black/40 text-center">
+                                Swipe để xem thêm tab →
+                            </p>
+                        )}
                     </div>
+
+
                 </motion.div>
-                <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 px-6 pb-16 pt-10 sm:gap-12 sm:pt-14 md:grid-cols-2">
-                    <div className="relative">
+                <div className="items-center gap-8 sm:gap-10 md:gap-12 grid grid-cols-1 md:grid-cols-2 mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-14 sm:pb-16 max-w-6xl">
+                    <div className="relative order-1">
                         <AnimatePresence mode="wait" initial={false}>
                             <motion.div
                                 key={tab.id}
@@ -545,34 +563,35 @@ const MainScreenPage = () => {
                                 initial="hidden"
                                 animate="show"
                                 exit="exit"
-                                className="max-w-xl"
+                                className="mx-auto md:mx-0 max-w-xl text-left"
                             >
-                                <h2 className="text-2xl font-semibold sm:text-3xl">
+                                <h2 className="font-semibold text-2xl md:text-3xl">
                                     {tab.title}
                                 </h2>
 
-                                <p className="mt-4 text-base leading-7 text-black/75">
+                                <p className="mt-3 sm:mt-4 text-[15px] text-black/75 md:text-base leading-7">
                                     {tab.intro}
                                 </p>
 
-                                <ul className="mt-6 space-y-3">
+                                <ul className="space-y-3 mt-5 sm:mt-6">
                                     {tab.bullets.map((b, idx) => (
-                                        <li key={idx} className="flex items-start gap-3">
-                                            <span className="mt-1 inline-flex">
+                                        <li
+                                            key={idx}
+                                            className="flex items-start gap-3"
+                                        >
+                                            <span className="inline-flex mt-1 shrink-0">
                                                 <RadioButtonCheckedIcon fontSize="small" />
                                             </span>
-                                            <span className="text-base leading-7">{b}</span>
+                                            <span className="text-[15px] md:text-base leading-7">
+                                                {b}
+                                            </span>
                                         </li>
                                     ))}
                                 </ul>
-
-                                {/* <button className="mt-6 inline-flex items-center gap-1 rounded-full border border-black px-5 py-2 text-sm font-medium transition hover:-translate-y-0.5">
-                                    {tab.cta}
-                                </button> */}
                             </motion.div>
                         </AnimatePresence>
                     </div>
-                    <div className="relative">
+                    <div className="relative order-2 mt-6 md:mt-0">
                         <AnimatePresence mode="wait" initial={false}>
                             <motion.div
                                 key={`${tab.id}-img`}
@@ -583,8 +602,8 @@ const MainScreenPage = () => {
                                 exit="exit"
                                 className="relative mx-auto w-full max-w-[720px]"
                             >
-                                <div className="relative rounded-[28px]  shadow-[0_10px_40px_rgba(0,0,0,0.25)]">
-                                    <div className="relative aspect-video w-full overflow-hidden rounded-[22px] bg-black">
+                                <div className="relative shadow-[0_10px_40px_rgba(0,0,0,0.25)] rounded-[28px]">
+                                    <div className="relative bg-black rounded-[22px] w-full aspect-video overflow-hidden">
                                         <Image
                                             src={tab.img}
                                             alt={tab.imgAlt}
@@ -600,18 +619,18 @@ const MainScreenPage = () => {
                     </div>
                 </div>
             </section>
-            <section className="w-full  text-black">
-                <div className="mx-auto max-w-6xl space-y-20 px-6 py-16 sm:px-8 lg:py-28">
+            <section className="w-full text-black">
+                <div className="space-y-20 mx-auto px-6 sm:px-8 py-16 lg:py-28 max-w-6xl">
                     <motion.div
                         variants={stagger}
                         initial="hidden"
                         whileInView="show"
                         viewport={{ once: true, amount: 0.25 }}
-                        className="text-center space-y-6"
+                        className="space-y-6 text-center"
                     >
                         <motion.h1
                             variants={fadeUp}
-                            className="text-4xl font-extrabold leading-tight tracking-tight sm:text-6xl sm:leading-[1.1]"
+                            className="font-extrabold text-4xl sm:text-6xl leading-tight sm:leading-[1.1] tracking-tight"
                         >
                             Simplify your salon operations with
                             <br className="hidden sm:block" />
@@ -620,7 +639,7 @@ const MainScreenPage = () => {
 
                         <motion.p
                             variants={fadeUp}
-                            className="mx-auto mt-6 max-w-3xl text-[17px] leading-relaxed text-black/70"
+                            className="mx-auto mt-6 max-w-3xl text-[17px] text-black/70 leading-relaxed"
                         >
                             From day one, RAVO helps your business run smoother — with built-in features made for salons and seamless integrations . Find the perfect tools to grow your business, all in one system.
                         </motion.p>
@@ -628,7 +647,7 @@ const MainScreenPage = () => {
                         {/* <motion.div variants={fadeUp}>
                             <Link
                                 href="#"
-                                className="mt-8 inline-flex items-center gap-2 text-[15px] font-semibold text-black hover:opacity-70"
+                                className="inline-flex items-center gap-2 hover:opacity-70 mt-8 font-semibold text-[15px] text-black"
                                 aria-label="Learn more about RAVO App Marketplace"
                             >
                                 Learn more about RAVO App Marketplace
@@ -642,7 +661,7 @@ const MainScreenPage = () => {
                         initial="hidden"
                         whileInView="show"
                         viewport={{ once: true, amount: 0.15 }}
-                        className="mt-14 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-6"
+                        className="gap-x-6 gap-y-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 mt-14"
                     >
                         {TILES.map(({ label, Icon, bg }) => (
                             <motion.div key={label} variants={fadeUp} className="group flex flex-col items-center text-center">
@@ -657,7 +676,7 @@ const MainScreenPage = () => {
                                 </motion.div>
                                 <motion.span
                                     variants={fadeUp}
-                                    className="mt-3 text-sm text-black/80"
+                                    className="mt-3 text-black/80 text-sm"
                                 >
                                     {label}
                                 </motion.span>
@@ -667,26 +686,22 @@ const MainScreenPage = () => {
                 </div>
             </section>
             <HardwareGrid cards={CARDS} fadeUp={fadeUp} stagger={stagger} />;
-            <section className="mx-auto w-full px-20 py-20 text-black">
+            <section className="mx-auto px-6 md:px-20 py-16 md:py-20 w-full text-black">
                 <motion.h2
                     variants={fadeUp}
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: true, amount: 0.4 }}
-                    className="faq-heading font-serif text-5xl sm:text-6xl text-black"
+                    className="font-serif text-black text-5xl md:text-6xl leading-tight faq-heading"
                 >
                     FAQ
                 </motion.h2>
-
-
-                <div className="mt-20 h-px w-full bg-neutral-200" />
-
                 <motion.div
                     variants={stagger}
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: true, amount: 0.2 }}
-                    className="border-t border-neutral-200 text-black"
+                    className="mt-2 sm:mt-4 border-neutral-200 border-t max-w-4xl md:max-w-7xl text-black"
                 >
                     {ITEMSFAQ.map((item, i) => (
                         <AccordionItem
@@ -699,7 +714,6 @@ const MainScreenPage = () => {
                         />
                     ))}
                 </motion.div>
-
             </section>
 
         </main>

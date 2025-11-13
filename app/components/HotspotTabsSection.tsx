@@ -70,32 +70,31 @@ export default function HotspotTabsSection<K extends string = string>({
             onClick={handleWrapperClick}
             className={`w-full bg-white text-black ${className}`}
         >
-            <div className="mx-auto max-w-7xl px-6 sm:px-8 py-16 sm:py-24">
-                <div className="grid items-start gap-12 lg:grid-cols-3">
+            <div className="mx-auto px-4 sm:px-8 py-12 sm:py-24 max-w-7xl">
+                <div className="items-start gap-10 lg:gap-12 grid lg:grid-cols-3">
                     <div className="col-span-2">
                         <motion.h2
                             variants={fadeUp}
                             initial="hidden"
                             whileInView="show"
                             viewport={{ once: true, amount: 0.35 }}
-                            className="font-serif text-4xl mb-20 leading-tight sm:text-5xl md:text-6xl"
+                            className="mb-10 sm:mb-20 font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight"
                         >
                             {title}
                         </motion.h2>
-
                         <motion.div
                             variants={slideLeft}
                             initial="hidden"
                             whileInView="show"
                             viewport={{ once: true, amount: 0.25 }}
-                            className="mt-10 overflow-hidden rounded-3xl bordershadow-sm"
+                            className="mt-6 sm:mt-10 rounded-3xl overflow-hidden bordershadow-sm"
                         >
-                            <div className="relative mx-auto aspect-16/10 w-full">
+                            <div className="relative mx-auto w-full aspect-16/10">
                                 <Image
                                     src={activeTab.leftImg}
                                     alt={`${activeTab.label} left`}
                                     fill
-                                    className="object-contain rounded-4xl"
+                                    className="rounded-4xl object-contain"
                                     priority
                                 />
                                 <div className="absolute inset-0">
@@ -121,10 +120,9 @@ export default function HotspotTabsSection<K extends string = string>({
                                                                 e.stopPropagation();
                                                                 setActiveNoteIndex(idx);
                                                             }}
-                                                            className="group cursor-pointer rounded-2xl shadow-sm bg-[#0C807E] hover:scale-110 hover:bg-black/50"
-                                                            aria-label={`Show note ${idx + 1}`}
+                                                            className="group bg-[#0C807E] hover:bg-black/50 shadow-sm rounded-2xl hover:scale-110 cursor-pointer"
                                                         >
-                                                            <AddIcon className="h-7 w-7 text-white transition hover:text-white group-hover:scale-[1.05]" />
+                                                            <AddIcon className="w-7 h-7 text-white" />
                                                         </motion.button>
                                                     ) : (
                                                         <motion.div
@@ -134,10 +132,10 @@ export default function HotspotTabsSection<K extends string = string>({
                                                             animate={{ opacity: 1, y: 0 }}
                                                             exit={{ opacity: 0, y: -6 }}
                                                             transition={{ duration: 0.2 }}
-                                                            className="max-w-60 rounded-xl bg-white/95 px-3.5 py-2.5 text-[12px] leading-snug shadow-md ring-1 ring-black/10 backdrop-blur"
+                                                            className="bg-white/95 shadow-md backdrop-blur px-3.5 py-2.5 rounded-xl ring-1 ring-black/10 max-w-60 text-[12px] leading-snug"
                                                         >
-                                                            <div className="mb-1 flex items-center gap-2  font-medium text-neutral-800">
-                                                                <StickyNote2RoundedIcon className="h-4 w-4" />
+                                                            <div className="flex items-center gap-2 mb-1 font-medium text-neutral-800">
+                                                                <StickyNote2RoundedIcon className="w-4 h-4" />
                                                                 Note
                                                             </div>
                                                             <p className="text-neutral-800">{h.note}</p>
@@ -148,17 +146,16 @@ export default function HotspotTabsSection<K extends string = string>({
                                         );
                                     })}
                                 </div>
-
                             </div>
                         </motion.div>
                     </div>
-                    <div className="flex flex-col">
+                    <div className="flex flex-col mt-4 lg:mt-0">
                         <motion.div
                             variants={fadeIn}
                             initial="hidden"
                             whileInView="show"
                             viewport={{ once: true, amount: 0.3 }}
-                            className="flex flex-wrap gap-3"
+                            className="flex flex-wrap gap-2 sm:gap-3"
                         >
                             {tabs.map((t) => {
                                 const active = t.key === activeKey;
@@ -167,12 +164,10 @@ export default function HotspotTabsSection<K extends string = string>({
                                         key={t.key}
                                         onClick={() => setActiveKey(t.key as K)}
                                         variant="outlined"
-                                        size="medium"
+                                        size="small"
+                                        className="px-3! py-1.5! rounded-full! text-xs! sm:text-sm!"
                                         sx={{
-                                            borderRadius: 999,
                                             textTransform: "none",
-                                            px: 2.5,
-                                            py: 1.25,
                                             color: active ? "white" : "black",
                                             backgroundColor: active ? "black" : "white",
                                             borderColor: "black",
@@ -180,7 +175,6 @@ export default function HotspotTabsSection<K extends string = string>({
                                                 backgroundColor: active ? "#222" : "#f5f5f5",
                                                 borderColor: "black",
                                             },
-                                            transition: "all 0.2s ease",
                                         }}
                                     >
                                         {t.label}
@@ -195,9 +189,10 @@ export default function HotspotTabsSection<K extends string = string>({
                                 initial="hidden"
                                 whileInView="show"
                                 viewport={{ once: true, amount: 0.25 }}
-                                className="mt-10 mb-5 overflow-hidden rounded-3xl border border-neutral-200 shadow-sm"
+                                className="hidden md:block shadow-sm mt-6 sm:mt-10 mb-5 border border-neutral-200 rounded-3xl overflow-hidden"
+
                             >
-                                <div className="relative aspect-16/10 w-full">
+                                <div className="relative w-full aspect-16/10">
                                     <Image
                                         src={activeTab.rightImg}
                                         alt={`${activeTab.label} right`}
@@ -208,6 +203,7 @@ export default function HotspotTabsSection<K extends string = string>({
                                 </div>
                             </motion.figure>
                         </AnimatePresence>
+
                         {Array.isArray(activeTab.description)
                             ? activeTab.description.map((des, i) => (
                                 <motion.p
@@ -216,18 +212,17 @@ export default function HotspotTabsSection<K extends string = string>({
                                     initial="hidden"
                                     whileInView="show"
                                     viewport={{ once: true, amount: 0.3 }}
-                                    className="mt-4 text-[14px] leading-relaxed text-neutral-600"
+                                    className="mt-3 text-[14px] text-neutral-600 leading-relaxed"
                                     dangerouslySetInnerHTML={{ __html: des }}
                                 />
                             ))
                             : activeTab.description && (
                                 <motion.p
-                                    key={`${activeTab.key}-desc`}
                                     variants={fadeUp}
                                     initial="hidden"
                                     whileInView="show"
                                     viewport={{ once: true, amount: 0.3 }}
-                                    className="mt-4 text-[14px] leading-relaxed text-neutral-600"
+                                    className="mt-10 md:mt-3 text-[14px] text-neutral-600 leading-relaxed"
                                     dangerouslySetInnerHTML={{ __html: activeTab.description }}
                                 />
                             )}
@@ -235,5 +230,7 @@ export default function HotspotTabsSection<K extends string = string>({
                 </div>
             </div>
         </section>
+
+
     );
 }

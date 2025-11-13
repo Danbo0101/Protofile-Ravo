@@ -8,6 +8,7 @@ import { stagger, fadeUp } from "@/app/components/variants";
 import ReliablePOSSection, { Tab } from "@/app/components/ReliablePOSSection";
 import HotspotTabsSection, { TabData } from "@/app/components/HotspotTabsSection";
 import AccordionItem from "@/app/components/AccordionItem";
+import HardwareGrid from "@/app/components/HardwareGrid";
 
 import PointOfSaleRoundedIcon from "@mui/icons-material/PointOfSaleRounded";
 import InsightsRoundedIcon from "@mui/icons-material/InsightsRounded";
@@ -26,6 +27,9 @@ import imgCheck4 from "@/app/assets/imgCheck4.png";
 import imgCheck5 from "@/app/assets/imgCheck5.png";
 import imgCheck6 from "@/app/assets/imgCheck6.png";
 import imgCheck7 from "@/app/assets/imgCheck7.png";
+import imgScreen from "@/app/assets/imgScreen.png";
+import imgDigital from "@/app/assets/imgDigital.png";
+import imgTerminal from "@/app/assets/imgTerminal.png";
 
 const TABS: Tab[] = [
     {
@@ -138,7 +142,30 @@ const ITEMSFAQ: { q: string; a: string }[] = [
     },
 ];
 
+const CARDS = [
+    {
+        eyebrow: "Terminal",
+        title: "Compact countertop POS built for speed and style",
+        href: "/products/hardware/terminal/",
+        img: imgTerminal.src,
+        imgAlt: "Terminal",
+    },
+    {
+        eyebrow: "Digital Screen",
+        title: "Smart display that engages clients and boosts visibility",
+        href: "/products/hardware/digital/",
+        img: imgDigital.src,
+        imgAlt: "Digital Screen",
+    },
+    {
+        eyebrow: "Main Screen",
+        title: "Large 24-inch touchscreen built for nail salons",
+        href: "/products/hardware/mainScreen/",
+        img: imgScreen.src,
+        imgAlt: "RAVO Main Screen",
+    },
 
+];
 
 const CheckInOutPOSPage = () => {
 
@@ -146,11 +173,11 @@ const CheckInOutPOSPage = () => {
 
 
     return (
-        <main className="w-full bg-white">
+        <main className="bg-white w-full">
             <section className="relative w-full min-h-screen overflow-hidden text-white">
-                <div className="absolute inset-0 ">
+                <div className="absolute inset-0">
                     <video
-                        className="absolute inset-0 h-full w-full object-cover object-right mask-[linear-gradient(to_top,transparent_0%,white_6%)]"
+                        className="absolute inset-0 w-full h-full object-center object-cover md:object-right mask-[linear-gradient(to_top,transparent_0%,white_14%)] md:mask-[linear-gradient(to_top,transparent_0%,white_6%)]"
                         autoPlay
                         muted
                         loop
@@ -159,12 +186,18 @@ const CheckInOutPOSPage = () => {
                     >
                         <source src="/videoCheck1.mp4" type="video/mp4" />
                     </video>
-                    <div className="absolute inset-0 bg-linear-to-r from-white/50 via-white/20 to-transparent" />
-                    <div className="absolute inset-0 bg-linear-to-b from-black/50 via-black/20 to-transparent " />
-                    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_80%_at_100%_50%,rgba(0,0,0,0.15),transparent_60%)]" />
+                    <div
+                        className="absolute inset-0 bg-white/35 md:bg-transparent md:bg-linear-to-r md:from-white/50 md:via-white/20 md:to-transparent"
+                    />
+                    <div
+                        className="absolute inset-0 bg-black/35 md:bg-transparent md:bg-linear-to-b md:from-black/50 md:via-black/20 md:to-transparent"
+                    />
+                    <div
+                        className="hidden md:block absolute inset-0 bg-[radial-gradient(120%_80%_at_100%_50%,rgba(0,0,0,0.15),transparent_60%)] pointer-events-none"
+                    />
                 </div>
-                <div className="relative mx-auto max-w-7xl px-6 sm:px-8">
-                    <div className="flex min-h-screen items-center py-16 sm:py-20 lg:py-28">
+                <div className="relative mx-auto px-6 sm:px-8 max-w-7xl">
+                    <div className="flex items-center py-16 sm:py-20 lg:py-28 min-h-screen">
                         <motion.div
                             variants={stagger}
                             initial="hidden"
@@ -173,24 +206,24 @@ const CheckInOutPOSPage = () => {
                         >
                             <motion.h1
                                 variants={fadeUp}
-                                className="font-serif tracking-tight leading-[0.95] text-2xl sm:text-4xl md:text-6xl"
+                                className="font-serif text-4xl md:text-6xl leading-[0.95] tracking-tight"
                             >
                                 Smart Salon Check-In
                             </motion.h1>
 
                             <motion.p
                                 variants={fadeUp}
-                                className="mt-4 text-base leading-relaxed text-neutral-200 md:max-w-xl"
+                                className="mt-4 md:max-w-xl text-neutral-200 text-xs md:text-base leading-relaxed"
                             >
                                 Welcome every client with ease. RAVO’s smart check-in POS connects your
                                 front desk, staff, and payments—all in one elegant system made for nail
                                 salons.
                             </motion.p>
 
-                            <motion.div variants={fadeUp} className="mt-8 flex flex-wrap items-center gap-4">
+                            <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-4 mt-8">
                                 <a
-                                    href="#buy"
-                                    className="inline-flex items-center justify-center rounded-full bg-transfer border border-white px-10 py-3 text-base font-semibold text-white shadow-lg shadow-black/10 ring-1 ring-black/10 transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white hover:text-black hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/30"
+                                    href="tel:+13463267765"
+                                    className="inline-flex justify-center items-center bg-transfer hover:bg-white shadow-black/10 shadow-lg hover:shadow-xl px-8 md:px-10 py-2 md:py-3 border border-white rounded-full focus-visible:outline-none ring-1 ring-black/10 focus-visible:ring-2 focus-visible:ring-black/30 font-semibold text-[14px] text-white hover:text-black md:text-base transition-transform hover:-translate-y-0.5 duration-200"
                                 >
                                     Buy now
                                 </a>
@@ -201,28 +234,28 @@ const CheckInOutPOSPage = () => {
                 </div>
 
             </section>
-            <section className="w-full bg-white text-black">
-                <div className="mx-auto max-w-7xl px-6 sm:px-8 py-16 lg:py-24">
+            <section className="bg-white text-black">
+                <div className="mx-auto px-6 py-20 md:py-24 w-full max-w-7xl">
                     <motion.div
                         variants={stagger}
                         initial="hidden"
                         whileInView="show"
                         viewport={{ once: true, amount: 0.25 }}
-                        className="grid gap-10 md:grid-cols-3"
+                        className="gap-10 grid md:grid-cols-3"
                     >
                         <motion.article
                             variants={fadeUp}
-                            className="group max-w-xl md:pr-8"
+                            className="group md:pr-8 max-w-xl"
                         >
                             <PointOfSaleRoundedIcon
                                 sx={{ fontSize: 40 }}
                                 className="mb-4 text-black"
                                 aria-hidden
                             />
-                            <h3 className="text-2xl sm:text-3xl font-semibold text-neutral-700 tracking-tight">
+                            <h3 className="font-semibold text-neutral-700 text-2xl sm:text-3xl tracking-tight">
                                 Faster front desk flow
                             </h3>
-                            <p className="mt-3 text-[15px] leading-relaxed text-neutral-500">
+                            <p className="mt-3 text-[14px] text-neutral-500 md:text-[15px] leading-relaxed">
                                 Streamline every arrival and checkout. RAVO keeps the line moving
                                 while techs get notified automatically—no shouting names or
                                 counter confusion.
@@ -230,31 +263,31 @@ const CheckInOutPOSPage = () => {
                         </motion.article>
                         <motion.article
                             variants={fadeUp}
-                            className="group max-w-xl md:px-8"
+                            className="group md:px-8 max-w-xl"
                         >
                             <InsightsRoundedIcon
                                 sx={{ fontSize: 40 }}
                                 className="mb-4 text-black"
                                 aria-hidden
                             />
-                            <h3 className="text-2xl sm:text-3xl font-semibold text-neutral-700 tracking-tight">
+                            <h3 className="font-semibold text-neutral-700 text-2xl sm:text-3xl tracking-tight">
                                 Smarter insights from every visit
                             </h3>
-                            <p className="mt-3 text-[15px] leading-relaxed text-neutral-500">
+                            <p className="mt-3 text-[14px] text-neutral-500 md:text-[15px] leading-relaxed">
                                 Track client patterns, popular services, and team performance in
                                 one place. Turn daily operations into data that fuels growth.
                             </p>
                         </motion.article>
-                        <motion.article variants={fadeUp} className="group max-w-xl md:pl-8">
+                        <motion.article variants={fadeUp} className="group md:pl-8 max-w-xl">
                             <StarsRoundedIcon
                                 sx={{ fontSize: 40 }}
                                 className="mb-4 text-black"
                                 aria-hidden
                             />
-                            <h3 className="text-2xl sm:text-3xl font-semibold text-neutral-700 tracking-tight">
+                            <h3 className="font-semibold text-neutral-700 text-2xl sm:text-3xl tracking-tight">
                                 Happier clients, higher reviews
                             </h3>
-                            <p className="mt-3 text-[15px] leading-relaxed text-neutral-500">
+                            <p className="mt-3 text-[14px] text-neutral-500 md:text-[15px] leading-relaxed">
                                 Give every guest a smooth, consistent experience—shorter waits,
                                 clear handoffs, and checkouts that feel effortless.
                             </p>
@@ -268,9 +301,9 @@ const CheckInOutPOSPage = () => {
             <section>
                 <HotspotTabsSection tabs={TABSS} />
             </section>
-            <section className="w-full bg-white text-black">
-                <div className="mx-auto max-w-7xl px-6 sm:px-8 py-16 sm:py-24">
-                    <div className="grid overflow-hidden rounded-3xl border border-neutral-200 shadow-sm lg:grid-cols-2">
+            <section className="bg-white w-full text-black">
+                <div className="mx-auto px-6 sm:px-8 py-16 sm:py-24 max-w-7xl">
+                    <div className="grid lg:grid-cols-2 shadow-sm border border-neutral-200 rounded-3xl overflow-hidden">
                         <motion.figure
                             variants={fadeUp}
                             initial="hidden"
@@ -292,46 +325,46 @@ const CheckInOutPOSPage = () => {
                             initial="hidden"
                             whileInView="show"
                             viewport={{ once: true, amount: 0.3 }}
-                            className="flex flex-col justify-center bg-neutral-400 text-white p-10 sm:p-14 md:p-16 lg:p-20"
+                            className="flex flex-col justify-center bg-neutral-700 p-10 sm:p-14 md:p-16 lg:p-20 text-white"
                         >
-                            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight">
+                            <h2 className="font-serif font-semibold text-3xl sm:text-4xl md:text-5xl leading-tight">
                                 “Keep in Touch” with SMS
                             </h2>
 
-                            <p className="mt-2 text-lg text-neutral-300 font-medium">
+                            <p className="mt-2 font-medium text-neutral-300 text-lg">
                                 Low Cost, High Impact
                             </p>
 
-                            <p className="mt-6 text-[17px] leading-relaxed text-neutral-200">
+                            <p className="mt-6 text-[17px] text-neutral-200 leading-relaxed">
                                 Timely messages your clients actually see. RAVO’s SMS tools help
                                 you send relevant texts that drive bookings and upsells at a
                                 fraction of traditional ad costs.
                             </p>
 
-                            <ul className="mt-8 space-y-4 text-[17px] text-neutral-200">
+                            <ul className="space-y-4 mt-8 text-[17px] text-neutral-200">
                                 <li className="flex items-start gap-3">
-                                    <MarkEmailReadOutlinedIcon className="text-white mt-0.5" fontSize="small" />
+                                    <MarkEmailReadOutlinedIcon className="mt-0.5 text-white" fontSize="small" />
                                     <span>
                                         <strong>Promotions & codes:</strong> flash sales, weekly or monthly
                                         specials, new set designs.
                                     </span>
                                 </li>
                                 <li className="flex items-start gap-3">
-                                    <MarkEmailReadOutlinedIcon className="text-white mt-0.5" fontSize="small" />
+                                    <MarkEmailReadOutlinedIcon className="mt-0.5 text-white" fontSize="small" />
                                     <span>
                                         <strong>Reminders:</strong> upcoming appointment reminders reduce
                                         no-shows.
                                     </span>
                                 </li>
                                 <li className="flex items-start gap-3">
-                                    <MarkEmailReadOutlinedIcon className="text-white mt-0.5" fontSize="small" />
+                                    <MarkEmailReadOutlinedIcon className="mt-0.5 text-white" fontSize="small" />
                                     <span>
                                         <strong>Personalization:</strong> segment by visit history, favorite
                                         services, or birthdays.
                                     </span>
                                 </li>
                                 <li className="flex items-start gap-3">
-                                    <MarkEmailReadOutlinedIcon className="text-white mt-0.5" fontSize="small" />
+                                    <MarkEmailReadOutlinedIcon className="mt-0.5 text-white" fontSize="small" />
                                     <span>
                                         <strong>Best practices:</strong> include opt-in/opt-out language and
                                         honor preferences to protect trust.
@@ -339,21 +372,21 @@ const CheckInOutPOSPage = () => {
                                 </li>
                             </ul>
 
-                            <p className="mt-8 text-[17px] text-neutral-100 font-medium">
+                            <p className="mt-8 font-medium text-[17px] text-neutral-100">
                                 Spend less to get more bookings, especially on slow days.
                             </p>
                         </motion.div>
                     </div>
                 </div>
             </section>
-            <section className="w-full shadow-2xl text-black py-24 sm:py-32">
-                <div className="mx-auto max-w-6xl px-6 text-center">
+            <section className="shadow-2xl py-24 sm:py-32 w-full text-black">
+                <div className="mx-auto px-6 max-w-6xl text-center">
                     <motion.blockquote
                         variants={fadeUp}
                         initial="hidden"
                         whileInView="show"
                         viewport={{ once: true, amount: 0.3 }}
-                        className="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight"
+                        className="font-serif font-semibold text-3xl sm:text-4xl md:text-5xl leading-tight"
                     >
                         “My customers love it. It’s clear, it’s concise, easy to read, and they
                         know exactly what they’re paying for.”
@@ -364,36 +397,36 @@ const CheckInOutPOSPage = () => {
                         initial="hidden"
                         whileInView="show"
                         viewport={{ once: true, amount: 0.4 }}
-                        className="mt-8 text-lg text-neutral-600"
+                        className="mt-8 text-neutral-600 text-lg"
                     >
                         Trina Gregory-Propst, Se7en Bites, Orlando, Florida
                     </motion.p>
                 </div>
             </section>
-            <section className="w-full bg-white text-black">
-                <div className="mx-auto max-w-7xl px-6 sm:px-8 py-16 sm:py-24">
-                    <div className="grid gap-10 lg:grid-cols-2 items-stretch">
+            <section className="bg-white w-full text-black">
+                <div className="mx-auto px-6 sm:px-8 py-16 sm:py-24 max-w-7xl">
+                    <div className="items-stretch gap-10 grid lg:grid-cols-2">
                         <motion.div
                             variants={fadeUp}
                             initial="hidden"
                             whileInView="show"
                             viewport={{ once: true, amount: 0.3 }}
-                            className="flex flex-col justify-center rounded-3xl bg-neutral-400 text-white p-10 sm:p-14 md:p-16 lg:p-20 shadow-sm"
+                            className="flex flex-col justify-center bg-neutral-600 shadow-sm p-10 sm:p-14 md:p-16 lg:p-20 rounded-3xl text-white"
                         >
-                            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight">
+                            <h2 className="font-serif font-semibold text-3xl sm:text-4xl md:text-5xl leading-tight">
                                 Fast, Friendly Check-Out
                             </h2>
 
-                            <p className="mt-3 text-lg text-neutral-300">
+                            <p className="mt-3 text-neutral-300 text-lg">
                                 End the visit cleanly, capture tips naturally.
                                 <br className="hidden sm:block" />
                                 RAVO’s checkout is built for clarity and speed.
                             </p>
 
-                            <ul className="mt-8 space-y-4 text-[17px] text-neutral-200 leading-relaxed">
+                            <ul className="space-y-4 mt-8 text-[17px] text-neutral-200 leading-relaxed">
                                 {FEATURES.map((item, i) => (
                                     <li key={i} className="flex items-start gap-3">
-                                        <CheckCircleRoundedIcon className="text-white mt-0.5" fontSize="small" />
+                                        <CheckCircleRoundedIcon className="mt-0.5 text-white" fontSize="small" />
                                         <span>
                                             <strong className="text-white">{item.title}:</strong> {item.desc}
                                         </span>
@@ -401,11 +434,11 @@ const CheckInOutPOSPage = () => {
                                 ))}
                             </ul>
 
-                            <p className="mt-8 text-[17px] font-medium text-neutral-100">
+                            <p className="mt-8 font-medium text-[17px] text-neutral-100">
                                 Happier techs. Less end-of-day stress.
                             </p>
                         </motion.div>
-                        <div className="grid gap-6 sm:grid-cols-2">
+                        <div className="gap-6 grid sm:grid-cols-2">
                             {FEATURES.map((f, i) => (
                                 <motion.div
                                     key={i}
@@ -413,12 +446,12 @@ const CheckInOutPOSPage = () => {
                                     initial="hidden"
                                     whileInView="show"
                                     viewport={{ once: true, amount: 0.25 }}
-                                    className="group rounded-3xl border border-neutral-200 bg-neutral-50 p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                                    className="group bg-neutral-50 shadow-sm hover:shadow-md p-6 border border-neutral-200 rounded-3xl transition hover:-translate-y-0.5"
                                 >
-                                    <div className="flex items-center justify-center rounded-2xl bg-white p-3 ring-1 ring-neutral-200 w-fit">
+                                    <div className="flex justify-center items-center bg-white p-3 rounded-2xl ring-1 ring-neutral-200 w-fit">
                                         {f.icon}
                                     </div>
-                                    <h3 className="mt-5 text-xl font-medium">{f.title}</h3>
+                                    <h3 className="mt-5 font-medium text-xl">{f.title}</h3>
                                     <p className="mt-2 text-[15px] text-neutral-600">{f.desc}</p>
                                 </motion.div>
                             ))}
@@ -426,26 +459,22 @@ const CheckInOutPOSPage = () => {
                     </div>
                 </div>
             </section>
-            <section className="mx-auto w-full px-20 py-20 text-black">
+            <section className="mx-auto px-6 md:px-20 py-16 md:py-20 w-full text-black">
                 <motion.h2
                     variants={fadeUp}
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: true, amount: 0.4 }}
-                    className="faq-heading font-serif text-5xl sm:text-6xl text-black"
+                    className="font-serif text-black text-5xl md:text-6xl leading-tight faq-heading"
                 >
                     FAQ
                 </motion.h2>
-
-
-                <div className="mt-20 h-px w-full bg-neutral-200" />
-
                 <motion.div
                     variants={stagger}
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: true, amount: 0.2 }}
-                    className="border-t border-neutral-200 text-black"
+                    className="mt-2 sm:mt-4 border-neutral-200 border-t max-w-4xl md:max-w-7xl text-black"
                 >
                     {ITEMSFAQ.map((item, i) => (
                         <AccordionItem
@@ -458,8 +487,8 @@ const CheckInOutPOSPage = () => {
                         />
                     ))}
                 </motion.div>
-
             </section>
+            <HardwareGrid cards={CARDS} fadeUp={fadeUp} stagger={stagger} />;
         </main>
     );
 };
