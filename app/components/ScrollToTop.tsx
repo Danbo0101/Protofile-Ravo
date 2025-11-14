@@ -1,10 +1,10 @@
 // app/ScrollToTop.tsx
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 
-export default function ScrollToTop() {
+function ScrollToTopInner() {
     const pathname = usePathname();
     const search = useSearchParams();
 
@@ -16,4 +16,12 @@ export default function ScrollToTop() {
     }, [pathname, search?.toString()]); // đổi path hoặc query đều về top
 
     return null;
+}
+
+export default function ScrollToTop() {
+    return (
+        <Suspense fallback={null}>
+            <ScrollToTopInner />
+        </Suspense>
+    );
 }

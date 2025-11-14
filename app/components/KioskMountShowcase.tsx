@@ -3,65 +3,63 @@
 import { useState } from "react";
 import Image, { StaticImageData } from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-// Nếu bạn đã có sẵn, import 3 thứ này thay cho local variants:
-import { EASE_OUT, fadeUp, floatIn } from "@/app/components/variants";
 
-// ===== Demo images (đổi sang ảnh thật của bạn) =====
-// import vesaMain from "@/app/assets/kiosk/vesa-main.png";
-// import vesaScene from "@/app/assets/kiosk/vesa-scene.jpg";
-// import vesaPlate from "@/app/assets/kiosk/vesa-plate.png";
-// ... tương tự cho angled / flat / counter
-const placeholder = "https://dummyimage.com/1200x800/efefef/aaa.png&text=Replace+image";
+import { EASE_OUT, fadeUp } from "@/app/components/variants";
+
+import imgDigital1 from "@/app/assets/imgDigital1.png";
+import imgDigital2 from "@/app/assets/imgDigital2.png";
+import imgDigital3 from "@/app/assets/imgDigital3.png";
 
 type MountItem = {
     key: string;
-    label: string;                 // text trên nút
-    desc: string;                  // mô tả dưới bên phải
-    note?: string;                 // ghi chú nhỏ (ví dụ: “sold separately”)
-    main: StaticImageData | string;    // ảnh lớn bên trái
-    scene: StaticImageData | string;   // ảnh scene bên phải
-    plate?: StaticImageData | string;  // ảnh plate nhỏ dưới scene
+    label: string;
+    desc: string[];
+    note?: string;
+    main: StaticImageData | string;
+    scene: StaticImageData | string;
 };
+
 
 const ITEMS: MountItem[] = [
     {
-        key: "vesa",
-        label: "VESA mount",
-        desc:
-            "Customize your setup with any 100×100 mm VESA mounting system, like a floor stand or swing arm (both sold separately).",
-        note: "Bosstab Floor Stand sold separately.",
-        main: placeholder, // vesaMain,
-        scene: placeholder, // vesaScene,
-        plate: placeholder, // vesaPlate,
+        key: "menus-pricing",
+        label: "Clear menus & transparent pricing",
+        desc: [
+            "Show services, add-ons, and seasonal sets beautifully.",
+            "Help clients understand their options instantly.",
+            "Reduce repeat questions and speed up decision-making.",
+        ],
+        note: "Fewer questions at the front desk.",
+        main: imgDigital1,
+        scene: imgDigital1,
     },
     {
-        key: "angled",
-        label: "Angled wall mount",
-        desc:
-            "Space-saving and ergonomic viewing angle for quick, self-serve flows along your walls and queue rails.",
-        main: placeholder,
-        scene: placeholder,
-        plate: placeholder,
+        key: "promos",
+        label: "Instant promos & new services",
+        desc: [
+            "Launch new services, bundles, and specials in seconds.",
+            "Highlight high-margin add-ons and seasonal designs.",
+            "All promotions stay synced with your RAVO POS.",
+        ],
+        note: "Fully synced with your RAVO POS.",
+        main: imgDigital2,
+        scene: imgDigital2,
     },
     {
-        key: "flat",
-        label: "Flat wall mount",
-        desc:
-            "Minimal, low-profile installation that keeps traffic areas clear while staying easy to reach.",
-        main: placeholder,
-        scene: placeholder,
-        plate: placeholder,
-    },
-    {
-        key: "counter",
-        label: "Countertop mount",
-        desc:
-            "Compact footprint for bars and host stands—stable, tidy, and simple to clean around.",
-        main: placeholder,
-        scene: placeholder,
-        plate: placeholder,
+        key: "cloud-control",
+        label: "Cloud updates with no downtime",
+        desc: [
+            "Update photos, pricing, and captions from anywhere.",
+            "Use ready-made templates for faster adjustments.",
+            "Schedule playlists to keep screens fresh all day.",
+        ],
+        main: imgDigital3,
+        scene: imgDigital3,
     },
 ];
+
+
+
 
 const fade = {
     initial: { opacity: 0, y: 8 },
@@ -75,127 +73,175 @@ export default function KioskMountShowcase() {
 
     return (
         <section className="bg-white text-neutral-900">
-            <div className="mx-auto max-w-7xl px-6 lg:px-12 py-16 lg:py-24">
-                {/* Top: title + description + tabs */}
-                <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-                    <div className="lg:col-span-6">
-                        <h2 className="font-serif text-5xl sm:text-6xl leading-[1.08]">
-                            Add a kiosk right<br />where you need one.
-                        </h2>
-                    </div>
+            <div className="mx-auto px-4 sm:px-6 lg:px-12 py-12 sm:py-16 lg:py-24 max-w-7xl">
+                <div className="lg:items-start gap-10 grid lg:grid-cols-12">
+                    <motion.div
+                        variants={fadeUp}
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={{ once: true, amount: 0.3 }}
+                        className="space-y-4 lg:col-span-6 lg:text-left text-center"
+                    >
+                        <span className="inline-flex items-center bg-neutral-50 px-3 py-1 border border-neutral-200 rounded-full font-medium text-neutral-500 text-xs uppercase tracking-[0.18em]">
+                            RAVO Digital Signage
+                        </span>
 
-                    <div className="lg:col-span-6">
-                        <p className="text-[17px] leading-7 text-neutral-700 max-w-[58ch]">
-                            With a range of mounting options, you can put a self ordering kiosk exactly
-                            where it makes sense for your unique space and your flow of business. Plus,
-                            all the installation hardware is in the box.
+                        <h2 className="font-serif text-3xl md:text-6xl leading-[1.06] tracking-tight">
+                            Display what matters.
+                            <br className="hidden sm:block" />
+                            <span className="sm:whitespace-nowrap"> Update it in seconds.</span>
+                        </h2>
+
+                        <p className="mx-auto lg:mx-0 max-w-xl text-[15px] text-neutral-600 sm:text-[17px] leading-7">
+                            RAVO’s digital signage helps your salon present services clearly, run promotions instantly,
+                            and keep screens fresh all day—fully synced with your POS.
+                        </p>
+                    </motion.div>
+
+                    <motion.div
+                        variants={fadeUp}
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={{ once: true, amount: 0.3 }}
+                        className="flex flex-col gap-4 lg:col-span-6 mt-8 lg:mt-20"
+                    >
+                        <p className="text-[14px] text-neutral-500 sm:text-[15px]">
+                            Choose a feature to preview how RAVO screens work in your salon.
                         </p>
 
-                        {/* Pills */}
-                        <div className="mt-5 flex flex-wrap gap-3">
-                            {ITEMS.map((it) => {
-                                const isActive = it.key === active;
-                                return (
-                                    <button
-                                        key={it.key}
-                                        onClick={() => setActive(it.key)}
-                                        className={[
-                                            "rounded-full border px-4 sm:px-5 py-2 text-sm font-medium transition-all",
-                                            isActive
-                                                ? "bg-black text-white border-black shadow-sm"
-                                                : "bg-white text-neutral-900 border-neutral-300 hover:border-neutral-500",
-                                        ].join(" ")}
-                                        role="tab"
-                                        aria-selected={isActive}
-                                    >
-                                        {it.label}
-                                    </button>
-                                );
-                            })}
+                        <div className="bg-neutral-50/60 p-2.5 sm:p-3 border border-neutral-200 rounded-2xl">
+                            <div className="gap-2.5 sm:gap-3 grid grid-cols-1 sm:grid-cols-3">
+                                {ITEMS.map((it, idx) => {
+                                    const isActive = it.key === active;
+                                    return (
+                                        <button
+                                            key={it.key}
+                                            onClick={() => setActive(it.key)}
+                                            className={[
+                                                "group flex h-full w-full flex-col items-start rounded-xl border px-3.5 py-3 text-left transition-all",
+                                                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/70 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-50",
+                                                isActive
+                                                    ? "bg-white text-neutral-900 border-black/80 shadow-sm shadow-black/5"
+                                                    : "bg-white/60 text-neutral-800 border-neutral-200 hover:bg-white hover:border-neutral-400",
+                                            ].join(" ")}
+                                            role="tab"
+                                            aria-selected={isActive}
+                                        >
+                                            <div className="flex items-center gap-2 font-medium text-neutral-500 text-xs uppercase tracking-[0.18em]">
+                                                <span
+                                                    className={[
+                                                        "inline-flex h-5 w-5 items-center justify-center rounded-full border text-[11px]",
+                                                        isActive
+                                                            ? "border-black bg-black text-white"
+                                                            : "border-neutral-300 bg-white text-neutral-700 group-hover:border-neutral-500",
+                                                    ].join(" ")}
+                                                >
+                                                    {idx + 1}
+                                                </span>
+                                                <span className="truncate">Feature {idx + 1}</span>
+                                            </div>
+
+                                            <span className="mt-2 font-medium sm:text-[15px] text-sm line-clamp-2">
+                                                {it.label}
+                                            </span>
+                                            <span className="mt-1 text-[12px] text-neutral-500 line-clamp-2 leading-snug">
+                                                {Array.isArray(it.desc) ? it.desc[0] : it.desc}
+                                            </span>
+                                        </button>
+                                    );
+                                })}
+                            </div>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
+                <div className="lg:items-start gap-10 grid lg:grid-cols-12 mt-10 lg:mt-14">
+                    <motion.div
+                        variants={fadeUp}
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={{ once: true, amount: 0.3 }}
+                        className="lg:col-span-7"
+                    >
+                        <div className="relative bg-linear-to-br from-neutral-50 via-neutral-100 to-neutral-200 shadow-sm p-3 sm:p-4 md:p-6 border border-neutral-200/80 rounded-[26px]">
+                            <div
+                                className="absolute inset-0 shadow-[0_30px_80px_rgba(15,23,42,0.08)] rounded-[26px] pointer-events-none"
+                                aria-hidden="true"
+                            />
 
-                {/* Gallery below */}
-                <div className="mt-8 lg:mt-12 grid lg:grid-cols-12 gap-8 lg:gap-12">
-                    {/* Left big image */}
-                    <div className="lg:col-span-7">
-                        <div className="relative rounded-3xl bg-neutral-100 p-4 sm:p-5 md:p-6">
-                            <div className="relative aspect-4/3 w-full rounded-2xl overflow-hidden">
-                                <AnimatePresence mode="wait">
-                                    <motion.div key={current.key + "-main"} {...fade} className="absolute inset-0">
-                                        <Image
-                                            src={current.main}
-                                            alt={`${current.label} main`}
-                                            fill
-                                            className="object-contain"
-                                            priority
-                                        />
-                                    </motion.div>
-                                </AnimatePresence>
-                            </div>
-
-                            {current.note && (
-                                <motion.p
-                                    className="mt-3 text-sm text-neutral-500"
-                                    variants={fadeUp}
-                                    initial="hidden"
-                                    animate="show"
-                                >
-                                    {current.note}
-                                </motion.p>
-                            )}
-                        </div>
-                    </div>
-
-                    {/* Right column: scene image + plate + description */}
-                    <div className="lg:col-span-5 flex flex-col gap-6">
-                        {/* Scene */}
-                        <div className="relative rounded-3xl overflow-hidden">
-                            <div className="relative aspect-4/3 w-full">
-                                <AnimatePresence mode="wait">
-                                    <motion.div key={current.key + "-scene"} {...fade} className="absolute inset-0">
-                                        <Image
-                                            src={current.scene}
-                                            alt={`${current.label} scene`}
-                                            fill
-                                            className="object-cover"
-                                        />
-                                    </motion.div>
-                                </AnimatePresence>
-                            </div>
-                        </div>
-
-                        {/* Plate + text */}
-                        <div className="grid grid-cols-[120px,1fr] gap-4 sm:gap-6 items-start">
-                            <div className="rounded-2xl border border-neutral-200 bg-white p-3">
-                                <div className="relative aspect-square w-full">
+                            <div className="relative backdrop-blur-sm rounded-2xl overflow-hidden">
+                                <div className="relative w-full aspect-video">
                                     <AnimatePresence mode="wait">
-                                        <motion.div key={current.key + "-plate"} {...fade} className="absolute inset-0">
+                                        <motion.div
+                                            key={current.key + "-main"}
+                                            {...fade}
+                                            className="absolute inset-0"
+                                        >
                                             <Image
-                                                src={current.plate ?? placeholder}
-                                                alt={`${current.label} plate`}
+                                                src={current.main}
+                                                alt={current.label}
                                                 fill
                                                 className="object-contain"
+                                                priority
                                             />
                                         </motion.div>
                                     </AnimatePresence>
                                 </div>
                             </div>
-
-                            <AnimatePresence mode="wait">
-                                <motion.p
-                                    key={current.key + "-desc"}
-                                    {...fade}
-                                    className="text-[17px] leading-7 text-neutral-700"
-                                >
-                                    {current.desc}
-                                </motion.p>
-                            </AnimatePresence>
                         </div>
-                    </div>
+                    </motion.div>
+
+                    <motion.div
+                        variants={fadeUp}
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={{ once: true, amount: 0.3 }}
+                        className="lg:col-span-5"
+                    >
+                        <div className="flex flex-col gap-6 bg-neutral-50/80 p-4 sm:p-6 border border-neutral-200 rounded-2xl h-full">
+                            <div className="space-y-3">
+                                <p className="font-medium text-[11px] text-neutral-500 uppercase tracking-[0.18em]">
+                                    Current focus
+                                </p>
+                                <h3 className="font-serif text-xl sm:text-2xl md:text-3xl leading-tight">
+                                    {current.label}
+                                </h3>
+
+                                <AnimatePresence mode="wait">
+                                    <motion.ul
+                                        key={current.key + "-desc"}
+                                        {...fade}
+                                        className="space-y-2 text-[15px] text-neutral-700 sm:text-[17px] leading-7"
+                                    >
+                                        {Array.isArray(current.desc) ? (
+                                            current.desc.map((line, i) => (
+                                                <li key={i} className="flex gap-2">
+                                                    <span className="mt-1.5 text-xs">•</span>
+                                                    <span>{line}</span>
+                                                </li>
+                                            ))
+                                        ) : (
+                                            <li>{current.desc}</li>
+                                        )}
+                                    </motion.ul>
+                                </AnimatePresence>
+                            </div>
+
+                            <div className="flex flex-wrap gap-2 mt-4 text-[12px] text-neutral-500">
+                                <span className="inline-flex items-center bg-white px-2.5 py-1 border border-neutral-200 rounded-full">
+                                    No printing required
+                                </span>
+                                <span className="inline-flex items-center bg-white px-2.5 py-1 border border-neutral-200 rounded-full">
+                                    Fully synced with RAVO POS
+                                </span>
+                            </div>
+                        </div>
+                    </motion.div>
                 </div>
             </div>
         </section>
+
+
+
+
     );
 }

@@ -6,9 +6,10 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 
 
-import imgKiosk from "@/app/assets/imgDigital.png";
+import imgbg from "@/app/assets/about9.png";
 import imgCheck from "@/app/assets/imgCheck.png";
-import imgDigital from "@/app/assets/imgDigital.png";
+import imgScreen from "@/app/assets/imgScreen.png";
+import imgDigital4 from "@/app/assets/imgDigital4.png";
 import imgTerminal from "@/app/assets/imgTerminal.png";
 
 import { fadeUp, floatIn, EASE_OUT, stagger } from "@/app/components/variants";
@@ -31,16 +32,16 @@ const CARDS = [
     {
         eyebrow: "Terminal",
         title: "Compact countertop POS built for speed and style",
-        href: "/hardware/stand",
+        href: "/products/hardware/terminal/",
         img: imgTerminal.src,
         imgAlt: "Terminal",
     },
     {
-        eyebrow: "Digital Screen",
-        title: "Smart display that engages clients and boosts visibility",
-        href: "/hardware/kiosk",
-        img: imgDigital.src,
-        imgAlt: "Digital Screen",
+        eyebrow: "Main Screen",
+        title: "Large 24-inch touchscreen built for nail salons",
+        href: "/products/hardware/mainScreen/",
+        img: imgScreen.src,
+        imgAlt: "RAVO Main Screen",
     },
     {
         eyebrow: "CheckIn - CheckOut Screen",
@@ -54,16 +55,20 @@ const CARDS = [
 
 const ITEMSFAQ: { q: string; a: string }[] = [
     {
-        q: "Can RAVO handle our unique turn method?",
-        a: "Yes. FIFO, clock-in time, or credit. We configure RAVO to match your policy, and everything is visible at the front desk to avoid confusion.",
+        q: "Do I need special hardware?",
+        a: "We support common commercial displays and media players. We’ll recommend a setup based on your layout and budget.",
     },
     {
-        q: "How does payroll work with tips and commissions?",
-        a: "Your rules are built in. RAVO calculates tips, commissions, and any splits automatically and generates clean reports in minutes.",
+        q: "Can I schedule different content by time or day?",
+        a: "Yes. Create playlists for rush hours, weekdays vs. weekends, or seasonal windows.",
     },
     {
-        q: "What payment options do you support?",
-        a: "Chip, tap, mobile wallets, and gift cards. You’ll get transparent pricing, clear statements, and optional next-day funding.",
+        q: "What if my prices change often?",
+        a: "That’s the point—edit once in the cloud and publish instantly. No reprints, no ladders, no hassle.",
+    },
+    {
+        q: "Can I show promos tied to my POS?",
+        a: "Absolutely. Promotions and codes can be synced with RAVO POS so your front desk stays aligned.",
     },
 ];
 
@@ -72,357 +77,361 @@ const DigitalScreenPage = () => {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
 
     return (
-        <main>
-            <section className="relative bg-neutral-100 text-neutral-900 py-24 lg:py-32 overflow-hidden">
-                <div className="mx-auto max-w-7xl px-6 lg:px-12 grid lg:grid-cols-2 gap-12 items-center">
-                    {/* LEFT SIDE */}
-                    <motion.div
-                        variants={fadeUp}
-                        initial="hidden"
-                        whileInView="show"
-                        viewport={{ once: true }}
-                        className="space-y-6"
-                    >
-                        <div>
-                            <h1 className="font-serif text-6xl sm:text-7xl leading-none">
-                                <span className="text-neutral-400">Square</span>{" "}
-                                <span className="text-neutral-900 block">Kiosk</span>
+        <main className="w-full min-h-screen">
+            <section className="relative w-full min-h-screen overflow-hidden text-white">
+                <Image
+                    src={imgbg}
+                    alt="RAVO Digital Signage"
+                    fill
+                    priority
+                    className="object-center object-cover"
+                />
+                <div className="absolute inset-0 bg-linear-to-b from-neutral-900/60 via-neutral-900/40 to-neutral-900/80" />
+                <div className="z-10 relative flex items-center mx-auto px-4 sm:px-6 lg:px-12 w-full max-w-7xl min-h-screen">
+                    <div className="items-center gap-10 grid lg:grid-cols-2 w-full">
+                        <motion.div
+                            variants={fadeUp}
+                            initial="hidden"
+                            whileInView="show"
+                            viewport={{ once: true, amount: 0.3 }}
+                            className="space-y-6 lg:text-left text-center"
+                        >
+                            <h1 className="font-serif text-4xl md:text-6xl leading-tight">
+                                <span className="block text-white/70">RAVO</span>
+                                <span className="block text-white">Digital Signage</span>
                             </h1>
-                        </div>
 
-                        <p className="text-lg text-neutral-600 max-w-md">
-                            Shorten wait times, free up staff, and let customers build their own
-                            orders with a customizable, iPad-run device.
-                        </p>
+                            <p className="mx-auto lg:mx-0 max-w-sm md:max-w-md text-white/80 text-sm sm:text-base md:text-lg">
+                                Turn idle time into sales. RAVO digital signage helps your salon display menus,
+                                prices, promos, and queue updates beautifully — all synced with your POS,
+                                no reprints or manual updates needed.
+                            </p>
 
-                        <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                            <button className="px-8 py-4 bg-black text-white rounded-full font-medium hover:bg-neutral-800 transition-all">
-                                Buy now
-                            </button>
-                            <button className="px-8 py-4 border border-neutral-900 rounded-full font-medium hover:bg-neutral-200 transition-all">
-                                Contact sales
-                            </button>
-                        </div>
-                    </motion.div>
-
-                    {/* RIGHT SIDE */}
-                    <motion.div
-                        variants={floatIn}
-                        initial="hidden"
-                        whileInView="show"
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.9, ease: EASE_OUT }}
-                        className="relative flex justify-center"
-                    >
-                        <div className="relative w-[580px] max-w-full">
-                            <Image
-                                src={imgKiosk}
-                                alt="Square Kiosk"
-                                className="object-contain"
-                                priority
-                            />
-                        </div>
-                    </motion.div>
+                            <div className="flex sm:flex-row flex-col justify-center lg:justify-start gap-3 sm:gap-4 pt-4">
+                                <a
+                                    href="tel:+13463267765"
+                                    className="inline-flex justify-center items-center bg-black/70 hover:bg-white backdrop-blur-sm px-7 sm:px-8 py-3.5 sm:py-4 border border-white/20 hover:border-black rounded-full font-medium text-white hover:text-black hover:scale-105 transition-all hover:translate-x-1"
+                                >
+                                    Explore features
+                                </a>
+                            </div>
+                        </motion.div>
+                    </div>
                 </div>
             </section>
             <section className="bg-white text-neutral-900">
-                <div className="mx-auto max-w-7xl px-6 lg:px-12 py-20">
-                    <div className="grid gap-x-12 gap-y-16 md:grid-cols-2 lg:grid-cols-4">
-                        {/* 1 */}
+                <div className="mx-auto px-5 sm:px-6 lg:px-12 py-14 sm:py-20 max-w-7xl">
+                    <div className="gap-x-10 gap-y-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
                         <motion.div
                             variants={fadeUp}
                             initial="hidden"
                             whileInView="show"
                             viewport={{ once: true, amount: 0.3 }}
-                            className="max-w-[34ch]"
+                            className="mx-auto w-full max-w-[34ch] sm:text-left text-center"
                         >
                             <EmojiEmotionsOutlinedIcon className="w-10 h-10" />
-                            <h3 className="mt-6 font-serif text-4xl md:text-[40px] leading-[1.1]">
-                                Affordable, easy setup
+                            <h3 className="mt-4 sm:mt-6 font-serif text-2xl sm:text-3xl md:text-4xl leading-[1.1]">
+                                Clear menus & pricing
                             </h3>
-                            <p className="mt-5 text-lg text-neutral-600">
-                                For real. No costly service visits. No pricey installation fees. Just add an
-                                iPad and set up your kiosk entirely on your own.
+                            <p className="mt-4 sm:mt-5 text-[15px] text-neutral-600 sm:text-[17px]">
+                                Display services, add-ons, and seasonal sets beautifully so clients choose faster
+                                and ask fewer “How much?” questions.
                             </p>
-
-                            <Link
-                                href="#"
-                                className="mt-8 inline-flex items-center gap-2 font-semibold text-neutral-900 hover:opacity-80"
-                            >
-                                <span>See compatible iPads</span>
-                                <span className="text-2xl leading-none">+</span>
-                            </Link>
                         </motion.div>
-
-                        {/* 2 */}
                         <motion.div
                             variants={fadeUp}
                             initial="hidden"
                             whileInView="show"
                             viewport={{ once: true, amount: 0.3 }}
-                            className="max-w-[34ch]"
+                            className="mx-auto w-full max-w-[34ch] sm:text-left text-center"
                         >
                             <BoltOutlinedIcon className="w-10 h-10" />
-                            <h3 className="mt-6 font-serif text-4xl md:text-[40px] leading-[1.1]">
-                                Stays powered unplugged
+                            <h3 className="mt-4 sm:mt-6 font-serif text-2xl sm:text-3xl md:text-4xl leading-[1.1]">
+                                Promotions in seconds
                             </h3>
-                            <p className="mt-5 text-lg text-neutral-600">
-                                If you lose power or need to unplug, Square Kiosk can run off iPad battery.
-                                iPad powered mode is only available on Square Kiosk (USB-C).
+                            <p className="mt-4 sm:mt-5 text-[15px] text-neutral-600 sm:text-[17px]">
+                                Launch specials, bundles, and seasonal designs instantly—no printing and no
+                                hassle at the front desk.
                             </p>
                         </motion.div>
-
-                        {/* 3 */}
                         <motion.div
                             variants={fadeUp}
                             initial="hidden"
                             whileInView="show"
                             viewport={{ once: true, amount: 0.3 }}
-                            className="max-w-[34ch]"
+                            className="mx-auto w-full max-w-[34ch] sm:text-left text-center"
                         >
                             <FitScreenOutlinedIcon className="w-10 h-10" />
-                            <h3 className="mt-6 font-serif text-4xl md:text-[40px] leading-[1.1]">
-                                Flexes to fit in your space
+                            <h3 className="mt-4 sm:mt-6 font-serif text-2xl sm:text-3xl md:text-4xl leading-[1.1]">
+                                Update from anywhere
                             </h3>
-                            <p className="mt-5 text-lg text-neutral-600">
-                                With multiple mounting options and a compact design, this self-serve kiosk
-                                adapts to fit your space and business.
+                            <p className="mt-4 sm:mt-5 text-[15px] text-neutral-600 sm:text-[17px]">
+                                Update photos, pricing, and captions remotely through the cloud. Set playlists to
+                                rotate by time of day or day of week.
                             </p>
                         </motion.div>
-
-                        {/* 4 */}
                         <motion.div
                             variants={fadeUp}
                             initial="hidden"
                             whileInView="show"
                             viewport={{ once: true, amount: 0.3 }}
-                            className="max-w-[34ch]"
+                            className="mx-auto w-full max-w-[34ch] sm:text-left text-center"
                         >
                             <AppsOutlinedIcon className="w-10 h-10" />
-                            <h3 className="mt-6 font-serif text-4xl md:text-[40px] leading-[1.1]">
-                                A kiosk solution by Square
+                            <h3 className="mt-4 sm:mt-6 font-serif text-2xl sm:text-3xl md:text-4xl leading-[1.1]">
+                                Smart queue display
                             </h3>
-                            <p className="mt-5 text-lg text-neutral-600">
-                                Simply pair Square Kiosk hardware and the Square Kiosk app (additional fees
-                                apply) with your primary Square POS hardware.
-                                <sup className="ml-0.5 align-super text-xs">1</sup>
+                            <p className="mt-4 sm:mt-5 text-[15px] text-neutral-600 sm:text-[17px]">
+                                Show who’s waiting, who’s next, and estimated timing—reducing interruptions and
+                                making your salon flow smoother for everyone.
                             </p>
-
-                            <Link
-                                href="#"
-                                className="mt-8 inline-flex items-center gap-2 font-semibold text-neutral-900 hover:opacity-80"
-                            >
-                                <span>Learn about the Square Kiosk app</span>
-                                <span className="text-xl">↗</span>
-                            </Link>
                         </motion.div>
                     </div>
                 </div>
             </section>
             <KioskMountShowcase />
             <section className="bg-white text-neutral-900">
-                <div className="mx-auto max-w-7xl px-6 lg:px-12 py-16 lg:py-24">
-                    <div className="grid items-center gap-12 lg:grid-cols-2">
-                        {/* LEFT */}
-                        <motion.div
-                            variants={fadeUp}
-                            initial="hidden"
-                            whileInView="show"
-                            viewport={{ once: true, amount: 0.25 }}
-                        >
-                            <h2 className="font-serif text-5xl sm:text-6xl leading-[1.05]">
-                                Get the Square Kiosk<br /> app and beat the rush.
-                            </h2>
-
-                            <p className="mt-6 text-[17px] leading-7 text-neutral-700 max-w-[58ch]">
-                                With a Square Kiosk app subscription, your front of house and back of house
-                                stay in sync with instant menu updates and real-time sales data.
-                                No third-party software needed.
-                            </p>
-
-                            <Link
-                                href="#"
-                                className="mt-10 inline-flex items-center gap-2 font-semibold hover:opacity-80"
-                            >
-                                <span>Learn more</span>
-                                <span className="text-xl">↗</span>
-                            </Link>
-                        </motion.div>
-
-                        {/* RIGHT — device frame */}
+                <div className="mx-auto px-4 sm:px-6 lg:px-12 py-12 sm:py-16 lg:py-24 max-w-7xl">
+                    <div className="items-center gap-10 grid lg:grid-cols-2">
                         <motion.div
                             variants={floatIn}
                             initial="hidden"
                             whileInView="show"
                             viewport={{ once: true, amount: 0.25 }}
-                            className="relative"
+                            className="md:hidden relative flex justify-center order-first lg:order-0"
                         >
-                            {/* Outer device body */}
-                            <div className="relative rounded-[56px] bg-neutral-900/95 shadow-[0_25px_80px_rgba(0,0,0,0.25)] p-4 sm:p-6 md:p-8">
-                                {/* Inner bezel */}
-                                <div className="rounded-[36px] bg-neutral-800 p-2 sm:p-3 md:p-4">
-                                    {/* Screen */}
-                                    <div className="relative rounded-3xl bg-white overflow-hidden">
-                                        <div className="relative aspect-video w-full">
-                                            <Image
-                                                src={imgKiosk}
-                                                alt="Kiosk app screen"
-                                                fill
-                                                className="object-cover"
-                                                priority
-                                            />
-                                        </div>
-                                    </div>
+                            <div className="relative bg-white rounded-3xl w-full max-w-xs sm:max-w-sm md:max-w-md overflow-hidden">
+                                <div className="relative w-full aspect-square">
+                                    <Image
+                                        src={imgDigital4}
+                                        alt="RAVO Waiting List Display"
+                                        fill
+                                        className="object-contain"
+                                        priority
+                                    />
                                 </div>
+                                <span className="top-4 sm:top-6 right-4 sm:right-6 absolute bg-neutral-700/60 rounded-full w-4 h-4" />
+                            </div>
+                        </motion.div>
+                        <motion.div
+                            variants={fadeUp}
+                            initial="hidden"
+                            whileInView="show"
+                            viewport={{ once: true, amount: 0.25 }}
+                            className="lg:text-left text-center"
+                        >
+                            <h2 className="font-serif text-3xl md:text-6xl leading-[1.05]">
+                                Waiting area signage
+                                <br className="hidden md:block" /> that reduces anxiety.
+                            </h2>
 
-                                {/* Camera / sensor nốt nhỏ để giống thiết bị */}
-                                <span className="absolute right-8 top-8 h-4 w-4 rounded-full bg-neutral-700/60" />
+                            <p className="mx-auto lg:mx-0 mt-6 max-w-[58ch] text-[15px] text-neutral-700 sm:text-[17px] leading-7">
+                                Keep guests informed with a real-time waiting list display.
+                                Show who’s waiting, who’s currently in service, and estimated
+                                timing — reducing interruptions like “Am I next?” and creating
+                                a calmer, more organized experience for both clients and technicians.
+                            </p>
+                        </motion.div>
+                        <motion.div
+                            variants={floatIn}
+                            initial="hidden"
+                            whileInView="show"
+                            viewport={{ once: true, amount: 0.25 }}
+                            className="hidden relative md:flex justify-center order-first lg:order-0"
+                        >
+                            <div className="relative bg-white rounded-3xl w-full max-w-xs sm:max-w-sm md:max-w-md overflow-hidden">
+                                <div className="relative w-full aspect-square">
+                                    <Image
+                                        src={imgDigital4}
+                                        alt="RAVO Waiting List Display"
+                                        fill
+                                        className="object-contain"
+                                        priority
+                                    />
+                                </div>
+                                <span className="top-4 sm:top-6 right-4 sm:right-6 absolute bg-neutral-700/60 rounded-full w-4 h-4" />
                             </div>
                         </motion.div>
                     </div>
                 </div>
             </section>
             <section className="bg-white text-neutral-900">
-                <div className="mx-auto max-w-7xl px-6 lg:px-12 py-16 lg:py-24 space-y-16 lg:space-y-24">
-                    {/* Processing fees card */}
-                    <motion.div
-                        variants={fadeUp}
-                        initial="hidden"
-                        whileInView="show"
-                        viewport={{ once: true, amount: 0.25 }}
-                        className="rounded-3xl bg-neutral-100 p-6 sm:p-10 lg:p-14"
-                    >
-                        <div className="grid gap-10 lg:grid-cols-3">
-                            {/* Col 1 */}
-                            <div>
-                                <h2 className="font-serif text-5xl sm:text-6xl leading-[1.05]">
-                                    Processing fees
-                                </h2>
+                <div className="mx-auto px-4 sm:px-6 lg:px-12 py-14 sm:py-16 lg:py-24 max-w-7xl">
+                    <div className="space-y-14 lg:space-y-20">
+                        <motion.div
+                            variants={fadeUp}
+                            initial="hidden"
+                            whileInView="show"
+                            viewport={{ once: true, amount: 0.25 }}
+                            className="relative bg-neutral-50/80 shadow-[0_18px_45px_rgba(0,0,0,0.06)] px-5 sm:px-8 lg:px-14 py-7 sm:py-9 lg:py-14 border border-neutral-200 rounded-[28px] sm:rounded-4xl overflow-hidden"
+                        >
+                            <div className="-top-24 absolute inset-x-0 bg-linear-to-br from-black/20 via-black/10 to-transparent opacity-70 blur-3xl h-40 pointer-events-none" />
 
-                                <div className="mt-8">
-                                    <div className="text-4xl sm:text-5xl font-semibold">
-                                        2.5% + 15¢
+                            <div className="relative lg:items-start gap-9 lg:gap-10 grid lg:grid-cols-[1.3fr_minmax(0,1fr)]">
+                                <div className="space-y-5 sm:space-y-6">
+                                    <div className="inline-flex items-center gap-2 bg-white/70 px-3 py-1 border border-neutral-300 rounded-full font-medium text-[11px] text-neutral-700 sm:text-[12px] uppercase tracking-[0.18em]">
+                                        Live Turn Queue
                                     </div>
-                                    <p className="mt-3 text-neutral-600">
-                                        per tap, dip, or swipe with Square Plus.
+
+                                    <h2 className="font-serif text-[26px] sm:text-[32px] md:text-[40px] lg:text-[48px] leading-[1.06] tracking-tight">
+                                        Turn-detail display{" "}
+                                        <span className="whitespace-nowrap">for a smoother workflow.</span>
+                                    </h2>
+
+                                    <p className="max-w-[60ch] text-[14px] text-neutral-700 sm:text-[16px] leading-7">
+                                        Give every tech a clear, shared view of the line—who&apos;s waiting, who&apos;s
+                                        in service, and who&apos;s on deck—so the floor flows smoothly without constant
+                                        “Who&apos;s next?” questions.
                                     </p>
+                                    <div className="flex flex-wrap gap-2.5 pt-1.5">
+                                        <span className="inline-flex items-center gap-2 bg-white shadow-sm px-3 py-1.5 rounded-full ring-1 ring-neutral-200 text-neutral-900 text-xs sm:text-sm">
+                                            <span className="bg-neutral-900 rounded-full w-1.5 h-1.5" />
+                                            Real-time updates
+                                        </span>
+
+                                        <span className="inline-flex items-center gap-2 bg-white shadow-sm px-3 py-1.5 rounded-full ring-1 ring-neutral-200 text-neutral-900 text-xs sm:text-sm">
+                                            <span className="bg-neutral-700 rounded-full w-1.5 h-1.5" />
+                                            Shared on every screen
+                                        </span>
+
+                                        <span className="inline-flex items-center gap-2 bg-white shadow-sm px-3 py-1.5 rounded-full ring-1 ring-neutral-200 text-neutral-900 text-xs sm:text-sm">
+                                            <span className="bg-black/70 rounded-full w-1.5 h-1.5" />
+                                            Less disputes, more flow
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="lg:pl-4">
+                                    <div className="relative bg-white/95 shadow-sm p-4 sm:p-6 lg:p-7 rounded-2xl ring-1 ring-neutral-200">
+                                        <div className="flex justify-between items-center gap-4 mb-4 sm:mb-5">
+                                            <div>
+                                                <p className="font-semibold text-[11px] text-neutral-500 sm:text-xs uppercase tracking-[0.16em]">
+                                                    Queue modes
+                                                </p>
+                                                <p className="mt-1 font-semibold text-[15px] text-neutral-900 sm:text-lg">
+                                                    Choose rules that fit your salon
+                                                </p>
+                                            </div>
+
+                                            <div className="flex justify-center items-center bg-neutral-100 rounded-full ring-1 ring-neutral-300 w-10 sm:w-11 h-10 sm:h-11 text-neutral-900">
+                                                <RocketLaunchOutlinedIcon className="w-5 sm:w-6 h-5 sm:h-6" />
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-3.5 sm:space-y-4 text-[13px] text-neutral-700 sm:text-sm">
+                                            <div className="flex items-start gap-3 bg-neutral-100/80 px-3 py-3 rounded-xl">
+                                                <span className="bg-neutral-900 mt-1 rounded-full w-1.5 h-1.5" />
+                                                <div>
+                                                    <p className="font-medium text-neutral-900">FIFO (First-In, First-Out)</p>
+                                                    <p className="text-neutral-600">
+                                                        Simple, fair queue—clients are taken in the order they arrive.
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex items-start gap-3 px-3 py-2.5 rounded-xl">
+                                                <span className="bg-neutral-700 mt-1 rounded-full w-1.5 h-1.5" />
+                                                <div>
+                                                    <p className="font-medium text-neutral-900">Clock-in based rotation</p>
+                                                    <p className="text-neutral-600">
+                                                        Rotate turns based on who&apos;s clocked in and available.
+                                                    </p>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex items-start gap-3 px-3 py-2.5 rounded-xl">
+                                                <span className="bg-black/70 mt-1 rounded-full w-1.5 h-1.5" />
+                                                <div>
+                                                    <p className="font-medium text-neutral-900">Point-based rules</p>
+                                                    <p className="text-neutral-600">
+                                                        Use points for long or complex services to keep things fair.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <p className="mt-4 sm:mt-5 text-[11px] text-neutral-500 sm:text-xs">
+                                            All movements are logged with timestamps for full transparency.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-
-                            {/* Col 2 */}
-                            <div className="lg:pt-[52px]">
-                                <div className="text-4xl sm:text-5xl font-semibold">6% + 30¢</div>
-                                <p className="mt-3 text-neutral-600">
-                                    per Cash App Afterpay transaction.
-                                </p>
-                            </div>
-
-                            {/* Col 3 */}
-                            <div className="lg:pt-2.5">
-                                <h3 className="text-4xl sm:text-[40px] leading-[1.1] font-semibold">
-                                    Get a custom rate
+                        </motion.div>
+                        <div className="gap-8 sm:gap-10 grid lg:grid-cols-3 px-4 md:px-0">
+                            <motion.div
+                                variants={fadeUp}
+                                initial="hidden"
+                                whileInView="show"
+                                viewport={{ once: true, amount: 0.25 }}
+                                className="max-w-[50ch]"
+                            >
+                                <div className="flex justify-center items-center bg-neutral-100 rounded-2xl ring-1 ring-neutral-300 w-11 sm:w-12 h-11 sm:h-12 text-neutral-900">
+                                    <CheckCircleOutlineIcon className="w-6 sm:w-7 h-6 sm:h-7" />
+                                </div>
+                                <h3 className="mt-4 sm:mt-5 font-semibold text-[20px] sm:text-[24px] leading-[1.15]">
+                                    Fair for every technician
                                 </h3>
-                                <p className="mt-4 text-neutral-700">
-                                    Some businesses that process $250K+ per year in credit card sales can get
-                                    custom pricing and processing fees.{" "}
-                                    <Link href="#" className="underline underline-offset-2">
-                                        Connect with us
-                                    </Link>
-                                    .
+                                <p className="mt-3 text-[14px] text-neutral-700 sm:text-[16px] leading-7">
+                                    Everyone sees the same turn board in real time—no misunderstandings, no
+                                    &quot;I thought it was my turn&quot; moments.
                                 </p>
-                            </div>
+                            </motion.div>
+                            <motion.div
+                                variants={fadeUp}
+                                initial="hidden"
+                                whileInView="show"
+                                viewport={{ once: true, amount: 0.25 }}
+                                className="max-w-[50ch]"
+                            >
+                                <div className="flex justify-center items-center bg-neutral-100 rounded-2xl ring-1 ring-neutral-300 w-11 sm:w-12 h-11 sm:h-12 text-neutral-900">
+                                    <RocketLaunchOutlinedIcon className="w-6 sm:w-7 h-6 sm:h-7" />
+                                </div>
+                                <h3 className="mt-4 sm:mt-5 font-semibold text-[20px] sm:text-[24px] leading-[1.15]">
+                                    Transparent & flexible rules
+                                </h3>
+                                <p className="mt-3 text-[14px] text-neutral-700 sm:text-[16px] leading-7">
+                                    Switch between FIFO, clock-in, or point-based rotation—your team always
+                                    understands how turns are assigned.
+                                </p>
+                            </motion.div>
+                            <motion.div
+                                variants={fadeUp}
+                                initial="hidden"
+                                whileInView="show"
+                                viewport={{ once: true, amount: 0.25 }}
+                                className="max-w-[50ch]"
+                            >
+                                <div className="flex justify-center items-center bg-neutral-100 rounded-2xl ring-1 ring-neutral-300 w-11 sm:w-12 h-11 sm:h-12 text-neutral-900">
+                                    <SupportAgentOutlinedIcon className="w-6 sm:w-7 h-6 sm:h-7" />
+                                </div>
+                                <h3 className="mt-4 sm:mt-5 font-semibold text-[20px] sm:text-[24px] leading-[1.15]">
+                                    Fewer disputes, smoother flow
+                                </h3>
+                                <p className="mt-3 text-[14px] text-neutral-700 sm:text-[16px] leading-7">
+                                    Managers spend less time handling turn disputes and more time keeping
+                                    the salon running efficiently.
+                                </p>
+                            </motion.div>
                         </div>
-                    </motion.div>
-
-                    {/* 3 features row */}
-                    <div className="grid gap-14 lg:grid-cols-3">
-                        {/* One-year warranty */}
-                        <motion.div
-                            variants={fadeUp}
-                            initial="hidden"
-                            whileInView="show"
-                            viewport={{ once: true, amount: 0.2 }}
-                            className="max-w-[44ch]"
-                        >
-                            <CheckCircleOutlineIcon className="h-11 w-11" />
-                            <h3 className="mt-5 text-3xl sm:text-4xl font-semibold">
-                                One-year warranty
-                            </h3>
-                            <p className="mt-4 text-neutral-700">
-                                Square Kiosk hardware gets up and running fast, but if you run into anything
-                                on the way, there’s a one-year warranty.
-                            </p>
-                        </motion.div>
-
-                        {/* Works with your iPad */}
-                        <motion.div
-                            variants={fadeUp}
-                            initial="hidden"
-                            whileInView="show"
-                            viewport={{ once: true, amount: 0.2 }}
-                            className="max-w-[44ch]"
-                        >
-                            <RocketLaunchOutlinedIcon className="h-11 w-11" />
-                            <h3 className="mt-5 text-3xl sm:text-4xl font-semibold">
-                                Works with your iPad
-                            </h3>
-                            <p className="mt-4 text-neutral-700">
-                                Square Kiosk is instantly intuitive. Use a{" "}
-                                <Link href="#" className="underline underline-offset-2">
-                                    compatible iPad
-                                </Link>{" "}
-                                you already own or add one to cart as you check out.
-                            </p>
-                        </motion.div>
-
-                        {/* Help along the way */}
-                        <motion.div
-                            variants={fadeUp}
-                            initial="hidden"
-                            whileInView="show"
-                            viewport={{ once: true, amount: 0.2 }}
-                            className="max-w-[44ch]"
-                        >
-                            <SupportAgentOutlinedIcon className="h-11 w-11" />
-                            <h3 className="mt-5 text-3xl sm:text-4xl font-semibold">
-                                Help along the way
-                            </h3>
-                            <p className="mt-4 text-neutral-700">
-                                The{" "}
-                                <Link href="#" className="underline underline-offset-2">
-                                    Square Kiosk Guide
-                                </Link>{" "}
-                                has instructions and helpful FAQ. Or chat with{" "}
-                                <Link href="#" className="underline underline-offset-2">
-                                    customer support
-                                </Link>{" "}
-                                for help when you need it.
-                            </p>
-                        </motion.div>
                     </div>
                 </div>
             </section>
             <HardwareGrid cards={CARDS} fadeUp={fadeUp} stagger={stagger} />;
-            <section className="mx-auto w-full px-20 py-20 text-black">
+            <section className="mx-auto px-6 md:px-20 py-16 md:py-20 w-full text-black">
                 <motion.h2
                     variants={fadeUp}
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: true, amount: 0.4 }}
-                    className="faq-heading font-serif text-5xl sm:text-6xl text-black"
+                    className="font-serif text-black text-5xl md:text-6xl leading-tight faq-heading"
                 >
                     FAQ
                 </motion.h2>
-
-
-                <div className="mt-20 h-px w-full bg-neutral-200" />
-
                 <motion.div
                     variants={stagger}
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: true, amount: 0.2 }}
-                    className="border-t border-neutral-200 text-black"
+                    className="mt-2 sm:mt-4 border-neutral-200 border-t max-w-4xl md:max-w-7xl text-black"
                 >
                     {ITEMSFAQ.map((item, i) => (
                         <AccordionItem
@@ -435,7 +444,6 @@ const DigitalScreenPage = () => {
                         />
                     ))}
                 </motion.div>
-
             </section>
         </main>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, Suspense } from "react";
 import { AnimatePresence, motion, useReducedMotion, type Variants, type Transition } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -109,7 +109,7 @@ const useMotionPrefs = () => {
     return { overlay, sheet, list, item, acc };
 };
 
-const Header = () => {
+const HeaderInner = () => {
     const [scrolled, setScrolled] = useState(false);
     const mv = useMotionPrefs();
 
@@ -194,10 +194,10 @@ const Header = () => {
                     closeWithDelay();
                 }}
             >
-                <div className="mx-auto max-w-7xl h-16 md:h-20 px-4 py-10 md:py-14 flex items-center justify-between gap-4 md:gap-8 transition-colors duration-300">
+                <div className="flex justify-between items-center gap-4 md:gap-8 mx-auto px-4 py-10 md:py-14 max-w-7xl h-16 md:h-20 transition-colors duration-300">
                     <div className="flex items-center gap-4 md:gap-8">
                         <Link href="/" onMouseEnter={immediateClose} onClick={hardClose} className="flex items-center">
-                            <Image src={ravoLogo} className="h-14 w-auto md:h-16" alt="Logo" priority />
+                            <Image src={ravoLogo} className="w-auto h-14 md:h-16" alt="Logo" priority />
                         </Link>
                         <nav className="hidden md:flex items-center gap-8 font-mono">
                             {NAV.map(({ key, label, href }) =>
@@ -243,14 +243,14 @@ const Header = () => {
                             </IconButton>
                             <a
                                 href="tel:+13463267765"
-                                className="ml-2 text-white font-bold text-[14px] md:text-[15px] bg-linear-to-r from-[#0C807E] to-[#86E3A8] px-4 py-2 md:px-6 md:py-3 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl"
+                                className="bg-linear-to-r from-[#0C807E] to-[#86E3A8] shadow-lg hover:shadow-xl ml-2 px-4 md:px-6 py-2 md:py-3 rounded-lg font-bold text-[14px] text-white md:text-[15px] hover:scale-105 transition-transform duration-300"
                             >
                                 <CallIcon sx={{ fontSize: 16 }} /> (346) 326-7765
                             </a>
                         </div>
 
                         <button
-                            className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/20"
+                            className="md:hidden inline-flex justify-center items-center border border-white/20 rounded-md w-10 h-10"
                             aria-label="Open menu"
                             onClick={() => setMobileOpen(true)}
                         >
@@ -277,7 +277,7 @@ const Header = () => {
                 {mobileOpen && (
                     <>
                         <motion.div
-                            className="fixed inset-0 z-60 bg-black/40 backdrop-blur-[2px] md:hidden"
+                            className="md:hidden z-60 fixed inset-0 bg-black/40 backdrop-blur-[2px]"
                             variants={mv.overlay}
                             initial="initial"
                             animate="animate"
@@ -285,7 +285,7 @@ const Header = () => {
                             onClick={() => setMobileOpen(false)}
                         />
                         <motion.aside
-                            className="fixed inset-y-0 right-0 z-61 w-[88%] max-w-[380px] bg-white/70 text-black shadow-2xl md:hidden flex flex-col rounded-l-2xl"
+                            className="md:hidden right-0 z-61 fixed inset-y-0 flex flex-col bg-white/70 shadow-2xl rounded-l-2xl w-[88%] max-w-[380px] text-black"
                             variants={mv.sheet}
                             initial="initial"
                             animate="animate"
@@ -297,19 +297,19 @@ const Header = () => {
                                 if (info.offset.x > 70 || info.velocity.x > 800) setMobileOpen(false);
                             }}
                         >
-                            <div className="pointer-events-none absolute inset-y-0 -left-1 w-1 bg-linear-to-b from-[#86E3A8]/70 via-transparent to-[#0C807E]/70 blur-[2px]" />
+                            <div className="-left-1 absolute inset-y-0 bg-linear-to-b from-[#86E3A8]/70 via-transparent to-[#0C807E]/70 blur-[2px] w-1 pointer-events-none" />
 
-                            <div className="flex items-center justify-end px-4 py-3 border-b border-neutral-200">
+                            <div className="flex justify-end items-center px-4 py-3 border-neutral-200 border-b">
                                 <motion.button
                                     whileTap={{ scale: 0.96 }}
                                     aria-label="Close menu"
-                                    className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-neutral-200"
+                                    className="inline-flex justify-center items-center border border-neutral-200 rounded-md w-10 h-10"
                                     onClick={() => setMobileOpen(false)}
                                 >
                                     ✕
                                 </motion.button>
                             </div>
-                            <motion.nav className="flex-1 overflow-y-auto px-2 py-2" variants={mv.list} initial="initial" animate="animate" exit="exit">
+                            <motion.nav className="flex-1 px-2 py-2 overflow-y-auto" variants={mv.list} initial="initial" animate="animate" exit="exit">
                                 {NAV.map(({ key, label, href }) => {
                                     const hasSub = LEFT_LIST[key].length > 0;
 
@@ -319,7 +319,7 @@ const Header = () => {
                                                 <Link
                                                     href={href}
                                                     onClick={() => setMobileOpen(false)}
-                                                    className="block rounded-xl px-4 py-3 text-base font-semibold text-neutral-800 hover:bg-neutral-100 active:scale-[0.995] transition"
+                                                    className="block hover:bg-neutral-100 px-4 py-3 rounded-xl font-semibold text-neutral-800 text-base active:scale-[0.995] transition"
                                                 >
                                                     {label}
                                                 </Link>
@@ -330,7 +330,7 @@ const Header = () => {
                                     return (
                                         <motion.div key={key} variants={mv.item} className="mb-1">
                                             <button
-                                                className="w-full flex items-center justify-between rounded-xl px-4 py-3 text-base font-semibold text-neutral-800 hover:bg-neutral-100 active:scale-[0.995] transition"
+                                                className="flex justify-between items-center hover:bg-neutral-100 px-4 py-3 rounded-xl w-full font-semibold text-neutral-800 text-base active:scale-[0.995] transition"
                                                 aria-expanded={mobileExpanded[key]}
                                                 onClick={() => setMobileExpanded((s) => ({ ...s, [key]: !s[key] }))}
                                             >
@@ -349,28 +349,28 @@ const Header = () => {
                                                                     <Link
                                                                         href={sub.href}
                                                                         onClick={() => setMobileOpen(false)}
-                                                                        className="block rounded-lg px-3 py-2 text-[15px] text-neutral-700 hover:bg-neutral-100 active:scale-[0.995] transition"
+                                                                        className="block hover:bg-neutral-100 px-3 py-2 rounded-lg text-[15px] text-neutral-700 active:scale-[0.995] transition"
                                                                     >
                                                                         {sub.label}
                                                                     </Link>
                                                                     {key === "Products" && RIGHT_CONTENT[sub.label] && (
                                                                         <div className="px-3 pb-2">
-                                                                            <div className="grid grid-cols-2 gap-3">
+                                                                            <div className="gap-3 grid grid-cols-2">
                                                                                 {RIGHT_CONTENT[sub.label]!.slice(0, 4).map((it, idx) => (
                                                                                     <Link
                                                                                         key={`${it.label}-${idx}`}
                                                                                         href={it.href ?? "#"}
                                                                                         onClick={() => setMobileOpen(false)}
-                                                                                        className="flex items-center gap-2 rounded-md p-2 hover:bg-neutral-100 active:scale-[0.995] transition"
+                                                                                        className="flex items-center gap-2 hover:bg-neutral-100 p-2 rounded-md active:scale-[0.995] transition"
                                                                                     >
                                                                                         {it.img ? (
-                                                                                            <div className="relative h-10 w-10 shrink-0">
+                                                                                            <div className="relative w-10 h-10 shrink-0">
                                                                                                 <Image src={it.img} alt={it.label} fill className="object-contain" />
                                                                                             </div>
                                                                                         ) : (
-                                                                                            <div className="h-10 w-10 shrink-0 rounded bg-neutral-100" />
+                                                                                            <div className="bg-neutral-100 rounded w-10 h-10 shrink-0" />
                                                                                         )}
-                                                                                        <span className="text-sm font-medium text-neutral-800 line-clamp-1">{it.label}</span>
+                                                                                        <span className="font-medium text-neutral-800 text-sm line-clamp-1">{it.label}</span>
                                                                                     </Link>
                                                                                 ))}
                                                                             </div>
@@ -386,12 +386,12 @@ const Header = () => {
                                     );
                                 })}
                             </motion.nav>
-                            <div className="border-t border-neutral-200 px-4 py-3 flex  items-center justify-between  backdrop-blur-md">
+                            <div className="flex justify-between items-center backdrop-blur-md px-4 py-3 border-neutral-200 border-t">
                                 <div className="flex items-center gap-1 sm:gap-2">
                                     <motion.button
                                         whileTap={{ scale: 0.9 }}
                                         onClick={() => window.open("https://www.facebook.com/thonguyenzota", "_blank")}
-                                        className="group p-2 rounded-lg transition-all hover:bg-linear-to-r hover:from-[#0C807E]/10 hover:to-[#86E3A8]/20"
+                                        className="group hover:bg-linear-to-r hover:from-[#0C807E]/10 hover:to-[#86E3A8]/20 p-2 rounded-lg transition-all"
                                     >
                                         <span className="sr-only">Facebook (Tho Nguyen)</span>
                                         <FacebookOutlinedIcon className="text-neutral-600 group-hover:text-[#0C807E] transition" fontSize="small" />
@@ -400,7 +400,7 @@ const Header = () => {
                                     <motion.button
                                         whileTap={{ scale: 0.9 }}
                                         onClick={() => window.open("https://www.instagram.com/ravopos_tho_nguyen", "_blank")}
-                                        className="group p-2 rounded-lg transition-all hover:bg-linear-to-r hover:from-[#0C807E]/10 hover:to-[#86E3A8]/20"
+                                        className="group hover:bg-linear-to-r hover:from-[#0C807E]/10 hover:to-[#86E3A8]/20 p-2 rounded-lg transition-all"
                                     >
                                         <span className="sr-only">Instagram</span>
                                         <InstagramIcon className="text-neutral-600 group-hover:text-[#0C807E] transition" fontSize="small" />
@@ -409,7 +409,7 @@ const Header = () => {
                                     <motion.button
                                         whileTap={{ scale: 0.9 }}
                                         onClick={() => window.open("https://www.facebook.com/RavoPosByThoNguyen", "_blank")}
-                                        className="group p-2 rounded-lg transition-all hover:bg-linear-to-r hover:from-[#0C807E]/10 hover:to-[#86E3A8]/20"
+                                        className="group hover:bg-linear-to-r hover:from-[#0C807E]/10 hover:to-[#86E3A8]/20 p-2 rounded-lg transition-all"
                                     >
                                         <span className="sr-only">Facebook Page</span>
                                         <FacebookIcon className="text-neutral-600 group-hover:text-[#0C807E] transition" fontSize="small" />
@@ -417,7 +417,7 @@ const Header = () => {
                                 </div>
                                 <a
                                     href="tel:+13463267765"
-                                    className="ml-2 flex items-center gap-2 text-white font-bold text-[14px] md:text-[15px] bg-linear-to-r from-[#0C807E] to-[#86E3A8] px-4 py-2 md:px-6 md:py-3 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-xl"
+                                    className="flex items-center gap-2 bg-linear-to-r from-[#0C807E] to-[#86E3A8] shadow-lg hover:shadow-xl ml-2 px-4 md:px-6 py-2 md:py-3 rounded-lg font-bold text-[14px] text-white md:text-[15px] hover:scale-105 transition-transform duration-300"
                                 >
                                     <CallIcon sx={{ fontSize: 18 }} /> (346) 326-7765
                                 </a>
@@ -459,10 +459,10 @@ const PanelTwoCols = ({
             exit="exit"
             onMouseEnter={onKeepOpen}
             onMouseLeave={onClose}
-            className="absolute left-0 right-0 top-full bg-white text-black shadow-[0_24px_60px_-24px_rgba(0,0,0,0.25)] hidden md:block"
+            className="hidden md:block top-full right-0 left-0 absolute bg-white shadow-[0_24px_60px_-24px_rgba(0,0,0,0.25)] text-black"
         >
-            <div className="mx-auto max-w-7xl px-6 py-10 ">
-                <div className="grid grid-cols-12 gap-10">
+            <div className="mx-auto px-6 py-10 max-w-7xl">
+                <div className="gap-10 grid grid-cols-12">
                     <div className="col-span-12 md:col-span-3">
                         <ul className="space-y-5">
                             {items.map((t) => {
@@ -487,17 +487,17 @@ const PanelTwoCols = ({
                         <AnimatePresence mode="wait">
                             {activeLeft && (
                                 <motion.div key={activeLeft} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.18 }}>
-                                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-10">
+                                    <div className="gap-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
                                         {(RIGHT_CONTENT[activeLeft] ?? []).map((it, idx) => (
                                             <Link key={`${it.label}-${idx}`} href={it.href ?? "#"} onClick={onNavigate} className="group flex flex-col items-center text-center cursor-pointer">
                                                 {it.img ? (
-                                                    <div className="h-16 w-16 mb-2 relative">
-                                                        <Image src={it.img} alt={it.label} fill className="object-contain transition-transform group-hover:scale-110" />
+                                                    <div className="relative mb-2 w-16 h-16">
+                                                        <Image src={it.img} alt={it.label} fill className="object-contain group-hover:scale-110 transition-transform" />
                                                     </div>
                                                 ) : (
                                                     <div className="mb-2 h-8" />
                                                 )}
-                                                {it.label ? <div className="text-sm font-semibold text-neutral-900">{it.label}</div> : null}
+                                                {it.label ? <div className="font-semibold text-neutral-900 text-sm">{it.label}</div> : null}
                                             </Link>
                                         ))}
                                     </div>
@@ -511,4 +511,18 @@ const PanelTwoCols = ({
     );
 };
 
+const Header = () => {
+    return (
+        <Suspense
+            fallback={
+                // giữ chỗ header, tránh layout bị nhảy
+                <div className="top-0 z-50 fixed inset-x-0 bg-white/80 border-neutral-200 border-b h-16 md:h-20" />
+            }
+        >
+            <HeaderInner />
+        </Suspense>
+    );
+};
+
 export default Header;
+
